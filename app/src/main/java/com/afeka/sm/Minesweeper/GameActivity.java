@@ -17,7 +17,7 @@ import android.media.MediaPlayer;
 public class GameActivity extends AppCompatActivity implements Finals {
     //niv naory
 
-    private int niv=3;
+   
     Game game;
     GridView gridView;
     TileAdapter tileAdapter;
