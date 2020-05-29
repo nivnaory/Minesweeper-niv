@@ -36,7 +36,7 @@ public class GameActivity extends AppCompatActivity implements Finals {
         Intent activityCalled = getIntent();
         sharedPref = GameActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
         level = activityCalled.getExtras().getInt(LEVEL_ACTIVITY_KEY);
-//        initiateRecords(); // for testing only!! run once
+        initiateRecords(); // for testing only!! run once
         game = new Game(level);
         handleUpperLayout(level);
         handleGridView();
@@ -146,7 +146,7 @@ public class GameActivity extends AppCompatActivity implements Finals {
         this.startActivity(intent);
     }
 
-    public void initiateRecords() { // for testing only!! run once
+    public void initiateRecords() { // TODO for testing only!! run once
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(String.valueOf(R.integer.EasyFirstPlace), INITIAL_RECORD_VALUE);
         editor.putInt(String.valueOf(R.integer.EasySecondPlace), INITIAL_RECORD_VALUE);

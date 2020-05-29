@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/BackgroundColor"
     tools:context="com.afeka.sm.Minesweeper.DifficultyChooserActivity">
+
 <ScrollView
     android:layout_width="wrap_content"
     android:layout_height="180dp">
@@ -16,6 +17,7 @@
     android:animateLayoutChanges="true">
   </FrameLayout>
 </ScrollView>
+
     <Button
         android:id="@+id/Easy"
         android:layout_width="match_parent"
@@ -51,7 +53,6 @@
         android:onClick="startGame"
         android:text="@string/Hard"
         />
-
 
     <Button
         android:id="@+id/Highlights"
