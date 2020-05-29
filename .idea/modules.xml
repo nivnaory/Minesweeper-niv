@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/Minesweeper.iml" filepath="$PROJECT_DIR$/Minesweeper.iml" group="Minesweeper" />
       <module fileurl="file://$PROJECT_DIR$/app/Minesweeper-app.iml" filepath="$PROJECT_DIR$/app/Minesweeper-app.iml" group="Minesweeper/app" />
       <module fileurl="file://$PROJECT_DIR$/Minesweeper-master-niv-Minesweeper.iml" filepath="$PROJECT_DIR$/Minesweeper-master-niv-Minesweeper.iml" group="Minesweeper" />
+      <module fileurl="file://$PROJECT_DIR$/MinesweeperApp.iml" filepath="$PROJECT_DIR$/MinesweeperApp.iml" group="MinesweeperApp" />
+      <module fileurl="file://$PROJECT_DIR$/app/MinesweeperApp-app.iml" filepath="$PROJECT_DIR$/app/MinesweeperApp-app.iml" group="MinesweeperApp/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Minesweeper/app" />
     </modules>
   </component>
