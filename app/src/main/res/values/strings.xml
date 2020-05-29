@@ -22,5 +22,6 @@
     <string name="HardFirstPlace">1000</string>
     <string name="HardSecondPlace">1000</string>
     <string name="HardThirdPlace">1000</string>
-
+    <string name="Hilglights">Highlights: </string>
+    <string name="Time"> time:</string>
 </resources>

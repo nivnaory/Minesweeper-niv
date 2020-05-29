@@ -3,6 +3,7 @@ package com.afeka.sm.Minesweeper;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,18 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
         boolean hasTheUserAlreadyChoseALevel = lastLevelThatWasChosen != INITIAL_VALUE_OF_CHOSEN_LEVEL_BY_THE_USER;
         if (hasTheUserAlreadyChoseALevel)
             markLastChosenLevel(lastLevelThatWasChosen);
+    }
+
+
+    public void changeFragment(View view){
+        Log.d("IN ChangeFragment: ","Niv naory ");
+        Fragment fragment;
+
+        fragment=new HighlightsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.Fhighlight,fragment)
+                .commit();
     }
 
     private void markLastChosenLevel(int chosenLevel) {
