@@ -19,6 +19,15 @@ public interface Finals {
 
     int BOARD_MINES_RATIO = 7;
 
+    int INITIAL_RECORD_VALUE = 1000;
+
+    int NUM_OF_RECORDS_TO_SAVE = 3;
+
     String LEVEL_ACTIVITY_KEY = "level Activity";
     String GAME_RESULT = "GameResult";
+
+    String TIME_PASSED = "timePassed";
+
+    String APP_CHOSEN_NAME = "MY_PREFERENCES_FILE";
+
 }

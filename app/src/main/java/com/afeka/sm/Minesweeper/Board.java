@@ -2,7 +2,7 @@ package com.afeka.sm.Minesweeper;
 
 import java.util.Random;
 
-public class Board implements Finals{
+public class Board implements Finals {
     private Tile[][] grid;
     private int numOfFlags;
     private int size;

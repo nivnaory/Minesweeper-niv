@@ -1,7 +1,10 @@
 package com.afeka.sm.Minesweeper;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -9,15 +12,13 @@ import android.widget.AdapterView;
 import android.content.Intent;
 import android.widget.GridView;
 import android.widget.TextView;
+
 import java.util.Timer;
 import java.util.TimerTask;
+
 import com.example.mineswipper.R;
-import android.media.MediaPlayer;
 
 public class GameActivity extends AppCompatActivity implements Finals {
-    //niv naory
-
-   
     Game game;
     GridView gridView;
     TileAdapter tileAdapter;
@@ -28,16 +29,20 @@ public class GameActivity extends AppCompatActivity implements Finals {
     boolean haveTheUserClickedForTheFirstTime = false;
     int timeSoFar;
     int currentTime;
+    int level;
+    SharedPreferences sharedPref;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
+
         Intent activityCalled = getIntent();
-        int level = activityCalled.getExtras().getInt(LEVEL_ACTIVITY_KEY);
+        sharedPref = GameActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
+        level = activityCalled.getExtras().getInt(LEVEL_ACTIVITY_KEY);
+//        initiateRecords(); // for testing only!! run once
         game = new Game(level);
         handleUpperLayout(level);
         handleGridView();
-
     }
 
     private void handleUpperLayout(int level) {
@@ -49,7 +54,7 @@ public class GameActivity extends AppCompatActivity implements Finals {
         numOfFlagsView = findViewById(R.id.NumOfFlags);
         String numOfFlags = Integer.toString(game.getBoard().getNumberOfFlags());
         String numOfFlagsLabel = getResources().getString(R.string.NumOfFlags);
-        numOfFlagsView.setText(String.format("%s %s",numOfFlagsLabel, numOfFlags));
+        numOfFlagsView.setText(String.format("%s %s", numOfFlagsLabel, numOfFlags));
     }
 
     private void handleLevelView(int level) {
@@ -80,7 +85,6 @@ public class GameActivity extends AppCompatActivity implements Finals {
     }
 
     private void handleShortClick() {
-        // play the service
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -91,9 +95,7 @@ public class GameActivity extends AppCompatActivity implements Finals {
                 }
                 String result = game.playTile(position);
                 if (!result.equals(GAME_STATUS_PLAY)) // Which means the user has won or lost
-                {
                     initiateGameOverActivity(result);
-                }
                 updateNumOfFlagsView(game.getBoard().getNumberOfFlags());
                 tileAdapter.notifyDataSetChanged();
             }
@@ -115,12 +117,10 @@ public class GameActivity extends AppCompatActivity implements Finals {
     private void runTimer() {
         timer = new Timer();
         timer.schedule(new mineSweeperTimerTask(), 0, 1000);
-
-      }
+    }
 
     class mineSweeperTimerTask extends TimerTask {
         private long firstClickTime = System.currentTimeMillis();
-
 
         @Override
         public void run() {
@@ -142,16 +142,25 @@ public class GameActivity extends AppCompatActivity implements Finals {
     public void initiateGameOverActivity(String status) {
         Intent intent = new Intent(this, GameOverActivity.class);
         boolean hasWon = status.equals(GAME_STATUS_WIN);
-        if (hasWon==false){
-            MediaPlayer mediaPlayer=MediaPlayer.create(this,R.raw.bomb);
-           mediaPlayer.start();
-        }else{
-            MediaPlayer mediaPlayer=MediaPlayer.create(this,R.raw.victory);
-            mediaPlayer.start();
-        }
         intent.putExtra(GAME_RESULT, hasWon);
+        intent.putExtra(TIME_PASSED, currentTime);
+        intent.putExtra(LEVEL_ACTIVITY_KEY, level);
         finishAffinity();
         this.startActivity(intent);
+    }
+
+    public void initiateRecords() { // for testing only!! run once
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(String.valueOf(R.integer.EasyFirstPlace), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.integer.EasySecondPlace), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.integer.EasyThirdPlace), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.integer.MediumFirstPlace), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.integer.MediumSecondPlace), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.integer.MediumThirdPlace), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.integer.HardFirstPlace), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.integer.HardSecondPlace), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.integer.HardThirdPlace), INITIAL_RECORD_VALUE);
+        editor.apply();
     }
 
     @Override
@@ -167,6 +176,4 @@ public class GameActivity extends AppCompatActivity implements Finals {
         if (haveTheUserClickedForTheFirstTime) // so the timer will run only after the user clicks
             runTimer();
     }
-
-
 }

@@ -11,7 +11,7 @@ import com.example.mineswipper.R;
 
 public class TileView extends LinearLayout {
     TextView mTextView;
-	
+
     public TileView(Context context) {
         super(context);
         generateTextViews(context);
