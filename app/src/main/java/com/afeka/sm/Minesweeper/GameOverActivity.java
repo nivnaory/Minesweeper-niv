@@ -65,10 +65,10 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
             currentLevelRecords[2] = time;
         }
         setCurrentLevelRecords(level, currentLevelRecords);
-        //TODO: remove log messages!!
-        Log.d("EasyFirstPlace", "" + currentLevelRecords[0]);
-        Log.d("EasySecondPlace", "" + currentLevelRecords[1]);
-        Log.d("EasyThirdPlace", "" + currentLevelRecords[2]);
+//        //TODO: remove log messages!!
+//        Log.d("EasyFirstPlace", "" + currentLevelRecords[0]);
+//        Log.d("EasySecondPlace", "" + currentLevelRecords[1]);
+//        Log.d("EasyThirdPlace", "" + currentLevelRecords[2]);
     }
 
     private void setCurrentLevelRecords(int level, int[] currentLevelRecords) {

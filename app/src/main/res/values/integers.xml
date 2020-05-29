@@ -9,4 +9,7 @@
     <integer name="HardFirstPlace">1000</integer>
     <integer name="HardSecondPlace">1000</integer>
     <integer name="HardThirdPlace">1000</integer>
+
+    <integer name="LastChosenLevel">0</integer>
+
 </resources>

@@ -12,6 +12,7 @@ public interface Finals {
 
     int EASY_LEVEL = 1;
     int MEDIUM_LEVEL = 2;
+    int HARD_LEVEL = 3;
 
     int EASY_BOARD_SIZE = 4;
     int MEDIUM_BOARD_SIZE = 6;
@@ -20,6 +21,8 @@ public interface Finals {
     int BOARD_MINES_RATIO = 7;
 
     int INITIAL_RECORD_VALUE = 1000;
+
+    int INITIAL_VALUE_OF_CHOSEN_LEVEL_BY_THE_USER = 0;
 
     int NUM_OF_RECORDS_TO_SAVE = 3;
 
