@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.mineswipper.R;
 
 import java.util.Objects;
@@ -30,7 +29,7 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
         setContentView(R.layout.difficulty_chooser_layout);
         sharedPref = DifficultyChooserActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
 
-        changeFragment();
+        StartHighlihgtsFragment();
 
         handleRecords();
 
@@ -62,7 +61,7 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
             getSupportFragmentManager().beginTransaction().hide(fragment).commit();
     }
 
-    public void changeFragment() {
+    public void StartHighlihgtsFragment() {
         // TODO: bring the actual data to be updated
         fragment = new HighlightsFragment();
         Bundle data = new Bundle();
@@ -109,6 +108,7 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
         getNameScreenIntent.putExtra(LEVEL_ACTIVITY_KEY, level);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(String.valueOf(R.integer.LastChosenLevel), level);
+
         editor.apply();
         startActivity(getNameScreenIntent);
     }
