@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +21,8 @@ import java.util.Objects;
 public class DifficultyChooserActivity extends AppCompatActivity implements Finals {
     int level;
     SharedPreferences sharedPref;
+    boolean isShowed = true;
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +30,12 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
         setContentView(R.layout.difficulty_chooser_layout);
         sharedPref = DifficultyChooserActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
 
+        changeFragment();
+
         handleRecords();
 
         handleLastLevelMarking();
+
     }
 
     private void handleRecords() {
@@ -48,14 +54,27 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
             markLastChosenLevel(lastLevelThatWasChosen);
     }
 
+    public void showHighlights(View view) {
+        isShowed = !isShowed;
+        if (!isShowed)
+            getSupportFragmentManager().beginTransaction().show(fragment).commit();
+        else
+            getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+    }
 
-    public void changeFragment(View view) {
-        Log.d("IN ChangeFragment: ", "Niv naory ");
-        Fragment fragment = new HighlightsFragment();
+    public void changeFragment() {
+        // TODO: bring the actual data to be updated
+        fragment = new HighlightsFragment();
+        Bundle data = new Bundle();
+        String test = "test";
+        data.putString("Test", test);
+        fragment.setArguments(data);
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.Fhighlight, fragment)
                 .commit();
+        getSupportFragmentManager().beginTransaction().hide(fragment).commit();
     }
 
     private void markLastChosenLevel(int chosenLevel) {

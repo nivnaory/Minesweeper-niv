@@ -63,7 +63,7 @@
         android:layout_centerInParent="true"
         android:background="@color/ButtonColor"
         android:text="@string/Hilglights"
-        android:onClick="changeFragment"
+        android:onClick="showHighlights"
         />
 
 </RelativeLayout>

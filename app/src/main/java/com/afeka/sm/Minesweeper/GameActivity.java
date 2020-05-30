@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,7 +36,7 @@ public class GameActivity extends AppCompatActivity implements Finals {
 
         Intent activityCalled = getIntent();
         sharedPref = GameActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
-        level = activityCalled.getExtras().getInt(LEVEL_ACTIVITY_KEY);
+        level = Objects.requireNonNull(activityCalled.getExtras()).getInt(LEVEL_ACTIVITY_KEY);
         initiateRecords(); // for testing only!! run once
         game = new Game(level);
         handleUpperLayout(level);
