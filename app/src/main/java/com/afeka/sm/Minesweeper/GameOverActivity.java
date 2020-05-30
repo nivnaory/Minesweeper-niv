@@ -41,6 +41,7 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
             hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
             if (hasTheUserBrokenARecord) {
                 getSupportFragmentManager().beginTransaction().show(fragment).commit();
+                //TODO: get the name from the fragment
                 //we get the name
                 String breakerRecordName = "The Name We Received from the fragment";
                 MineSweeperRecord newRecord = new MineSweeperRecord(breakerRecordName, timePassed);

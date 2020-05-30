@@ -34,5 +34,4 @@ public interface Finals {
     String APP_CHOSEN_NAME = "myPreferencesFile";
 
     String HAS_THE_USER_BROKEN_A_RECORD = "hasTheUserBrokenARecord";
-
 }

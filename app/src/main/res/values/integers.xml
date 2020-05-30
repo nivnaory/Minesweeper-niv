@@ -1,15 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    <integer name="EasyFirstPlace">1000</integer>-->
-<!--    <integer name="EasySecondPlace">1000</integer>-->
-<!--    <integer name="EasyThirdPlace">1000</integer>-->
-<!--    <integer name="MediumFirstPlace">1000</integer>-->
-<!--    <integer name="MediumSecondPlace">1000</integer>-->
-<!--    <integer name="MediumThirdPlace">1000</integer>-->
-<!--    <integer name="HardFirstPlace">1000</integer>-->
-<!--    <integer name="HardSecondPlace">1000</integer>-->
-<!--    <integer name="HardThirdPlace">1000</integer>-->
-
     <integer name="LastChosenLevel">0</integer>
-
 </resources>

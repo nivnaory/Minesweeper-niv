@@ -30,11 +30,14 @@ public class HighlightsFragment extends Fragment implements Finals {
         View view = inflater.inflate(R.layout.highlights_fragment, container, false);
         sharedPref = this.getActivity().getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
 
-//        String firstPlaceTest = sharedPref.getString(R.id.EasyFirstPlaceTime);
-//        TextView test = this.getActivity().findViewById(R.id.EasyFirstPlaceTime);
-//        test.setText();
-//        String test = getArguments().getString("Test");
-//        Log.d("test", test);
+        boolean hasAnyoneBrokenARecord = getArguments().getBoolean(HAS_THE_USER_BROKEN_A_RECORD);
+        if (hasAnyoneBrokenARecord) {
+            updateFragmentFields();
+        }
         return view;
+    }
+
+    private void updateFragmentFields() {
+        //TODO
     }
 }

@@ -6,16 +6,10 @@ import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.mineswipper.R;
-
-import java.util.Objects;
 
 
 public class DifficultyChooserActivity extends AppCompatActivity implements Finals {
@@ -30,10 +24,10 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
         setContentView(R.layout.difficulty_chooser_layout);
         sharedPref = DifficultyChooserActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
 
-        StartHighlihgtsFragment();
+        StartHighlightsFragment();
 
 //        handleRecords();
-
+//
         handleLastLevelMarking();
 
     }
@@ -62,12 +56,11 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
             getSupportFragmentManager().beginTransaction().hide(fragment).commit();
     }
 
-    public void StartHighlihgtsFragment() {
-        // TODO: bring the actual data to be updated
+    public void StartHighlightsFragment() {
         fragment = new HighlightsFragment();
         Bundle data = new Bundle();
-        String test = "test";
-        data.putString("Test", test);
+        Boolean hasAnyoneBrokenARecord = getIntent().getBooleanExtra(HAS_THE_USER_BROKEN_A_RECORD, false);
+        data.putBoolean(HAS_THE_USER_BROKEN_A_RECORD, hasAnyoneBrokenARecord);
         fragment.setArguments(data);
 
         getSupportFragmentManager()
@@ -113,6 +106,4 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
         editor.apply();
         startActivity(getNameScreenIntent);
     }
-
-
 }
