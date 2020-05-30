@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/BackgroundColor"
+    android:id="@+id/gameOverScreen"
     tools:context="com.afeka.sm.Minesweeper.GameOverActivity">
 
     <TextView
@@ -34,7 +35,6 @@
         android:layout_marginTop="250dp"
         android:backgroundTint="@color/StartNewGameButtonColor"
         android:onClick="StartNewGame"
-
         android:text="@string/StartNew"
         />
 
@@ -44,8 +44,6 @@
         android:layout_height="match_parent"
         android:layout_marginTop="350dp"
         android:layout_marginBottom="100dp"
-        android:background="#F0F8FF"
        >
-
     </FrameLayout>
 </RelativeLayout>

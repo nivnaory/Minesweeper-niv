@@ -25,7 +25,6 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
     int timePassed;
     int level;
     Fragment fragment;
-    boolean hasTheUserBrokenARecord;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +37,8 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
         if (win) {
             level = activity.getExtras().getInt(LEVEL_ACTIVITY_KEY);
             timePassed = activity.getExtras().getInt(TIME_PASSED);
-            hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
-            if (hasTheUserBrokenARecord) {
+            if(hasTheUserBrokenARecord(level,timePassed)){
                 getSupportFragmentManager().beginTransaction().show(fragment).commit();
-                //TODO: get the name from the fragment
-                //we get the name
-                String breakerRecordName = "The Name We Received from the fragment";
-                MineSweeperRecord newRecord = new MineSweeperRecord(breakerRecordName, timePassed);
-                updateRecords(newRecord, level);
             }
             TextResult = findViewById(R.id.GameResult);
             TextResult.setText(R.string.Win);
@@ -63,6 +56,16 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
         });
     }
 
+
+    public void StartNewGame(View view) {
+        Intent intent = new Intent(this, DifficultyChooserActivity.class);
+        boolean hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
+        intent.putExtra(HAS_THE_USER_BROKEN_A_RECORD, hasTheUserBrokenARecord);
+        intent.putExtra(LEVEL_ACTIVITY_KEY, level);
+        if (hasTheUserBrokenARecord)
+            intent.putExtra(TIME_PASSED, timePassed);
+        this.startActivity(intent);
+    }
     private void updateRecords(MineSweeperRecord newRecord, int level) {
         MineSweeperRecord[] currentLevelRecords = getCurrentLevelRecords(level);
         if (newRecord.getTime() < currentLevelRecords[0].getTime()) { // if first place - move all the elements one index away from the first place
@@ -76,14 +79,6 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
         }
         setCurrentLevelRecords(level, currentLevelRecords);
     }
-
-
-    public void StartNewGame(View view) { // Which is called by a button press
-        Intent intent = new Intent(this, DifficultyChooserActivity.class);
-        intent.putExtra(HAS_THE_USER_BROKEN_A_RECORD, hasTheUserBrokenARecord);
-        this.startActivity(intent);
-    }
-
     private MineSweeperRecord[] getCurrentLevelRecords(int level) {
         MineSweeperRecord[] currentLevelRecords = createEmptyRecords();
         switch (level) {
@@ -127,21 +122,6 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
         return time < currentLevelRecords[2].getTime(); // [2] == third place
     }
 
-    public void StartInputFragment() {
-        // TODO: bring the actual data to be updated
-        fragment = new InputFragment();
-        Bundle data = new Bundle();
-        String test = "test";
-        data.putString("Test", test);
-        //fragment.setArguments(data);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.inputFragment, fragment)
-                .commit();
-        getSupportFragmentManager().beginTransaction().hide(fragment).commit();
-    }
-
-
     private void setCurrentLevelRecords(int level, MineSweeperRecord[] currentLevelRecords) {
         SharedPreferences.Editor editor = sharedPref.edit();
         switch (level) {
@@ -171,5 +151,19 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
                 break;
         }
         editor.apply();
+    }
+
+    public void StartInputFragment() {
+        // TODO: bring the actual data to be updated
+        fragment = new InputFragment();
+        Bundle data = new Bundle();
+        String test = "test";
+        data.putString("Test", test);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.gameOverScreen, fragment)
+                .commit();
+
+        getSupportFragmentManager().beginTransaction().hide(fragment).commit();
     }
 }

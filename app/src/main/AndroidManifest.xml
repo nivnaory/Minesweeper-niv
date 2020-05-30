@@ -23,11 +23,12 @@
             android:label="Mineswipper"
             android:theme="@style/AppTheme"
             />
-
         <activity
             android:name="com.afeka.sm.Minesweeper.GameOverActivity"
-            android:label="MineSwipper"
-            android:theme="@style/AppTheme" />
+            android:label="Mineswipper"
+            android:theme="@style/AppTheme"
+            />
+
     </application>
 
 </manifest>
