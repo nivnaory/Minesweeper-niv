@@ -18,7 +18,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/LevelEasy"
+                android:id="@+id/LevelEasyLabel"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -28,7 +28,7 @@
                 android:textColor="@color/colorPrimaryDark" />
 
             <TextView
-                android:id="@+id/TimeEasy"
+                android:id="@+id/TimeEasyLabel"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/LevelMedium"
+                android:id="@+id/LevelMediumLabel"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -126,7 +126,7 @@
                 android:textColor="@color/colorPrimaryDark" />
 
             <TextView
-                android:id="@+id/TimeMedium"
+                android:id="@+id/TimeMediumLabel"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -141,6 +141,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/MediumFirstPlaceName"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -148,6 +149,7 @@
                 android:text="Omer" />
 
             <TextView
+                android:id="@+id/MediumFirstPlaceTime"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -160,6 +162,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/MediumSecondPlaceName"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -167,6 +170,7 @@
                 android:text="niv" />
 
             <TextView
+                android:id="@+id/MediumSecondPlaceTime"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -179,6 +183,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/MediumThirdPlaceName"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -186,6 +191,7 @@
                 android:text="asaf" />
 
             <TextView
+                android:id="@+id/MediumThirdPlaceTime"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -206,7 +212,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/LevelHard"
+                android:id="@+id/LevelHardLabel"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -216,7 +222,7 @@
                 android:textColor="@color/colorPrimaryDark" />
 
             <TextView
-                android:id="@+id/TimeHard"
+                android:id="@+id/TimeHardLabel"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -231,6 +237,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/HardFirstPlaceName"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -238,6 +245,7 @@
                 android:text="Omer" />
 
             <TextView
+                android:id="@+id/HardFirstPlaceTime"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -250,6 +258,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/HardSecondPlaceName"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -257,6 +266,7 @@
                 android:text="niv" />
 
             <TextView
+                android:id="@+id/HardSecondPlaceTime"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -269,6 +279,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/HardThirdPlaceName"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -276,6 +287,7 @@
                 android:text="asaf" />
 
             <TextView
+                android:id="@+id/HardThirdPlaceTime"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -283,9 +295,4 @@
                 android:text="200" />
         </TableRow>
     </TableLayout>
-
-
-    /
-
-
 </FrameLayout>
