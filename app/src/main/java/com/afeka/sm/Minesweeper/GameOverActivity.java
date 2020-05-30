@@ -31,14 +31,13 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
         setContentView(R.layout.game_over_layout);
         Intent activity = getIntent();
         sharedPref = GameOverActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
-        StartInputFragment();
 
         win = Objects.requireNonNull(activity.getExtras()).getBoolean(GAME_RESULT);
         if (win) {
             level = activity.getExtras().getInt(LEVEL_ACTIVITY_KEY);
             timePassed = activity.getExtras().getInt(TIME_PASSED);
+            StartInputFragment();
             if(hasTheUserBrokenARecord(level,timePassed)){
-                getSupportFragmentManager().beginTransaction().show(fragment).commit();
             }
             TextResult = findViewById(R.id.GameResult);
             TextResult.setText(R.string.Win);
@@ -163,7 +162,6 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
                 .beginTransaction()
                 .replace(R.id.gameOverScreen, fragment)
                 .commit();
-
         getSupportFragmentManager().beginTransaction().hide(fragment).commit();
     }
 }
