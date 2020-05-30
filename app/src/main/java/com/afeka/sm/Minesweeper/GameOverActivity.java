@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -34,7 +35,10 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
             level = activity.getExtras().getInt(LEVEL_ACTIVITY_KEY);
             timePassed = activity.getExtras().getInt(TIME_PASSED);
             if (hasTheUserBrokenARecord(level, timePassed)) {
+                Log.d("entered if", "!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 StartInputFragment();
+                MineSweeperRecord newRecord = new MineSweeperRecord("test123", timePassed);
+                updateRecords(newRecord, level);
             }
             TextResult = findViewById(R.id.GameResult);
             TextResult.setText(R.string.Win);
