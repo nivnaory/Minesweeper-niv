@@ -13,18 +13,18 @@
     <string name="ExitApp">Exit App</string>
     <string name="NumOfFlags">Num Of Flags: </string>
 
-    <string name="EasyFirstPlace">1000</string>
-    <string name="EasySecondPlace">1000</string>
-    <string name="EasyThirdPlace">1000</string>
-    <string name="MediumFirstPlace">1000</string>
-    <string name="MediumSecondPlace">1000</string>
-    <string name="MediumThirdPlace">1000</string>
-    <string name="HardFirstPlace">1000</string>
-    <string name="HardSecondPlace">1000</string>
-    <string name="HardThirdPlace">1000</string>
-    <string name="Hilglights">Highlights: </string>
+<!--    <string name="EasyFirstPlace">1000</string>-->
+<!--    <string name="EasySecondPlace">1000</string>-->
+<!--    <string name="EasyThirdPlace">1000</string>-->
+<!--    <string name="MediumFirstPlace">1000</string>-->
+<!--    <string name="MediumSecondPlace">1000</string>-->
+<!--    <string name="MediumThirdPlace">1000</string>-->
+<!--    <string name="HardFirstPlace">1000</string>-->
+<!--    <string name="HardSecondPlace">1000</string>-->
+<!--    <string name="HardThirdPlace">1000</string>-->
+    <string name="Highlights">Highlights: </string>
     <string name="Time"> time:</string>
 
-    <string name="HasTheUserBrokenARecord"> False</string>
+<!--    <string name="HasTheUserBrokenARecord"> False</string>-->
 
 </resources>

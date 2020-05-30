@@ -27,12 +27,14 @@ public class HighlightsFragment extends Fragment implements Finals {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.highlights_fragment, container, false);
+        sharedPref = this.getActivity().getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
 
-        //TODO: Fetch the actual data and setText
-        String test = getArguments().getString("Test");
-        Log.d("test", test);
+//        String firstPlaceTest = sharedPref.getString(R.id.EasyFirstPlaceTime);
+//        TextView test = this.getActivity().findViewById(R.id.EasyFirstPlaceTime);
+//        test.setText();
+//        String test = getArguments().getString("Test");
+//        Log.d("test", test);
         return view;
     }
 }

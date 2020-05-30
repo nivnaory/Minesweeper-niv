@@ -25,6 +25,7 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
     int timePassed;
     int level;
     Fragment fragment;
+    boolean hasTheUserBrokenARecord;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +38,13 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
         if (win) {
             level = activity.getExtras().getInt(LEVEL_ACTIVITY_KEY);
             timePassed = activity.getExtras().getInt(TIME_PASSED);
-            if(hasTheUserBrokenARecord(level,timePassed)){
+            hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
+            if (hasTheUserBrokenARecord) {
                 getSupportFragmentManager().beginTransaction().show(fragment).commit();
+                //we get the name
+                String breakerRecordName = "The Name We Received from the fragment";
+                MineSweeperRecord newRecord = new MineSweeperRecord(breakerRecordName, timePassed);
+                updateRecords(newRecord, level);
             }
             TextResult = findViewById(R.id.GameResult);
             TextResult.setText(R.string.Win);
@@ -56,43 +62,70 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
         });
     }
 
+    private void updateRecords(MineSweeperRecord newRecord, int level) {
+        MineSweeperRecord[] currentLevelRecords = getCurrentLevelRecords(level);
+        if (newRecord.getTime() < currentLevelRecords[0].getTime()) { // if first place - move all the elements one index away from the first place
+            System.arraycopy(currentLevelRecords, 0, currentLevelRecords, 1, currentLevelRecords.length - 1);
+            currentLevelRecords[0] = newRecord;
+        } else if (newRecord.getTime() < currentLevelRecords[1].getTime()) { // same for second place
+            System.arraycopy(currentLevelRecords, 0, currentLevelRecords, 1, currentLevelRecords.length - 2);
+            currentLevelRecords[1] = newRecord;
+        } else {
+            currentLevelRecords[2] = newRecord;
+        }
+        setCurrentLevelRecords(level, currentLevelRecords);
+    }
 
-    public void StartNewGame(View view) {
+
+    public void StartNewGame(View view) { // Which is called by a button press
         Intent intent = new Intent(this, DifficultyChooserActivity.class);
-        boolean hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
         intent.putExtra(HAS_THE_USER_BROKEN_A_RECORD, hasTheUserBrokenARecord);
-        intent.putExtra(LEVEL_ACTIVITY_KEY, level);
-        if (hasTheUserBrokenARecord)
-            intent.putExtra(TIME_PASSED, timePassed);
         this.startActivity(intent);
     }
 
-    private int[] getCurrentLevelRecords(int level) {
-        int[] currentLevelRecords = new int[NUM_OF_RECORDS_TO_SAVE];
+    private MineSweeperRecord[] getCurrentLevelRecords(int level) {
+        MineSweeperRecord[] currentLevelRecords = createEmptyRecords();
         switch (level) {
             case EASY_LEVEL:
-                currentLevelRecords[0] = sharedPref.getInt(String.valueOf(R.id.EasyFirstPlaceTime), 0);
-                currentLevelRecords[1] = sharedPref.getInt(String.valueOf(R.integer.EasySecondPlace), 0);
-                currentLevelRecords[2] = sharedPref.getInt(String.valueOf(R.integer.EasyThirdPlace), 0);
+                currentLevelRecords[0].setTime(sharedPref.getInt(String.valueOf(R.id.EasyFirstPlaceTime), 0));
+                currentLevelRecords[0].setName(sharedPref.getString(String.valueOf(R.id.EasyFirstPlaceName), ""));
+                currentLevelRecords[1].setTime(sharedPref.getInt(String.valueOf(R.id.EasySecondPlaceTime), 0));
+                currentLevelRecords[1].setName(sharedPref.getString(String.valueOf(R.id.EasySecondPlaceName), ""));
+                currentLevelRecords[2].setTime(sharedPref.getInt(String.valueOf(R.id.EasyThirdPlaceTime), 0));
+                currentLevelRecords[2].setName(sharedPref.getString(String.valueOf(R.id.EasyThirdPlaceName), ""));
                 break;
             case MEDIUM_LEVEL:
-                currentLevelRecords[0] = sharedPref.getInt(String.valueOf(R.integer.MediumFirstPlace), 0);
-                currentLevelRecords[1] = sharedPref.getInt(String.valueOf(R.integer.MediumSecondPlace), 0);
-                currentLevelRecords[2] = sharedPref.getInt(String.valueOf(R.integer.MediumThirdPlace), 0);
+                currentLevelRecords[0].setTime(sharedPref.getInt(String.valueOf(R.id.MediumFirstPlaceTime), 0));
+                currentLevelRecords[0].setName(sharedPref.getString(String.valueOf(R.id.MediumFirstPlaceName), ""));
+                currentLevelRecords[1].setTime(sharedPref.getInt(String.valueOf(R.id.MediumSecondPlaceTime), 0));
+                currentLevelRecords[1].setName(sharedPref.getString(String.valueOf(R.id.MediumSecondPlaceName), ""));
+                currentLevelRecords[2].setTime(sharedPref.getInt(String.valueOf(R.id.MediumThirdPlaceTime), 0));
+                currentLevelRecords[2].setName(sharedPref.getString(String.valueOf(R.id.MediumThirdPlaceName), ""));
                 break;
             default: // which is HARD_LEVEL
-                currentLevelRecords[0] = sharedPref.getInt(String.valueOf(R.integer.HardFirstPlace), 0);
-                currentLevelRecords[1] = sharedPref.getInt(String.valueOf(R.integer.HardSecondPlace), 0);
-                currentLevelRecords[2] = sharedPref.getInt(String.valueOf(R.integer.HardThirdPlace), 0);
+                currentLevelRecords[0].setTime(sharedPref.getInt(String.valueOf(R.id.HardFirstPlaceTime), 0));
+                currentLevelRecords[0].setName(sharedPref.getString(String.valueOf(R.id.HardFirstPlaceName), ""));
+                currentLevelRecords[1].setTime(sharedPref.getInt(String.valueOf(R.id.HardSecondPlaceTime), 0));
+                currentLevelRecords[1].setName(sharedPref.getString(String.valueOf(R.id.HardSecondPlaceName), ""));
+                currentLevelRecords[2].setTime(sharedPref.getInt(String.valueOf(R.id.HardThirdPlaceTime), 0));
+                currentLevelRecords[2].setName(sharedPref.getString(String.valueOf(R.id.HardThirdPlaceName), ""));
                 break;
         }
         return currentLevelRecords;
     }
 
-    private boolean hasTheUserBrokenARecord(int level, int time) {
-        int[] currentLevelRecords = getCurrentLevelRecords(level);
-        return time < currentLevelRecords[2]; // [2] == third place
+    private MineSweeperRecord[] createEmptyRecords() {
+        MineSweeperRecord[] currentLevelRecords = new MineSweeperRecord[NUM_OF_RECORDS_TO_SAVE];
+        for (int i = 0; i < NUM_OF_RECORDS_TO_SAVE; i++)
+            currentLevelRecords[i] = new MineSweeperRecord();
+        return currentLevelRecords;
     }
+
+    private boolean hasTheUserBrokenARecord(int level, int time) {
+        MineSweeperRecord[] currentLevelRecords = getCurrentLevelRecords(level);
+        return time < currentLevelRecords[2].getTime(); // [2] == third place
+    }
+
     public void StartInputFragment() {
         // TODO: bring the actual data to be updated
         fragment = new InputFragment();
@@ -105,5 +138,37 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
                 .replace(R.id.inputFragment, fragment)
                 .commit();
         getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+    }
+
+
+    private void setCurrentLevelRecords(int level, MineSweeperRecord[] currentLevelRecords) {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        switch (level) {
+            case EASY_LEVEL:
+                editor.putInt(String.valueOf(R.id.EasyFirstPlaceTime), currentLevelRecords[0].getTime());
+                editor.putString(String.valueOf(R.id.EasyFirstPlaceName), currentLevelRecords[0].getName());
+                editor.putInt(String.valueOf(R.id.EasySecondPlaceTime), currentLevelRecords[1].getTime());
+                editor.putString(String.valueOf(R.id.EasySecondPlaceName), currentLevelRecords[1].getName());
+                editor.putInt(String.valueOf(R.id.EasyThirdPlaceTime), currentLevelRecords[2].getTime());
+                editor.putString(String.valueOf(R.id.EasyThirdPlaceName), currentLevelRecords[2].getName());
+                break;
+            case MEDIUM_LEVEL:
+                editor.putInt(String.valueOf(R.id.MediumFirstPlaceTime), currentLevelRecords[0].getTime());
+                editor.putString(String.valueOf(R.id.MediumFirstPlaceName), currentLevelRecords[0].getName());
+                editor.putInt(String.valueOf(R.id.MediumSecondPlaceTime), currentLevelRecords[1].getTime());
+                editor.putString(String.valueOf(R.id.MediumSecondPlaceName), currentLevelRecords[1].getName());
+                editor.putInt(String.valueOf(R.id.MediumThirdPlaceTime), currentLevelRecords[2].getTime());
+                editor.putString(String.valueOf(R.id.MediumThirdPlaceName), currentLevelRecords[2].getName());
+                break;
+            default:
+                editor.putInt(String.valueOf(R.id.HardFirstPlaceTime), currentLevelRecords[0].getTime());
+                editor.putString(String.valueOf(R.id.HardFirstPlaceName), currentLevelRecords[0].getName());
+                editor.putInt(String.valueOf(R.id.HardSecondPlaceTime), currentLevelRecords[1].getTime());
+                editor.putString(String.valueOf(R.id.HardSecondPlaceName), currentLevelRecords[1].getName());
+                editor.putInt(String.valueOf(R.id.HardThirdPlaceTime), currentLevelRecords[2].getTime());
+                editor.putString(String.valueOf(R.id.HardThirdPlaceName), currentLevelRecords[2].getName());
+                break;
+        }
+        editor.apply();
     }
 }
