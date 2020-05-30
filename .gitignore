@@ -9,4 +9,5 @@
 .externalNativeBuild
 .idea/*
 *vcs.xml
+*gradle*
 
