@@ -48,7 +48,7 @@ public class InputFragment extends DialogFragment {
                 getActivity());
         builder.setTitle("You Brake a Record!!");
         builder.setMessage("Please Enter Your Name");
-        builder.setIcon(R.drawable.winner);
+//        builder.setIcon(R.drawable.winner);
         editText = new EditText(this.getActivity());
         builder.setView(editText);
 

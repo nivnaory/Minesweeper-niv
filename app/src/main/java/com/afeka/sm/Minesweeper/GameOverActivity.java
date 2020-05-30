@@ -6,11 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.mineswipper.R;
@@ -36,8 +33,8 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
         if (win) {
             level = activity.getExtras().getInt(LEVEL_ACTIVITY_KEY);
             timePassed = activity.getExtras().getInt(TIME_PASSED);
-            StartInputFragment();
-            if(hasTheUserBrokenARecord(level,timePassed)){
+            if (hasTheUserBrokenARecord(level, timePassed)) {
+                StartInputFragment();
             }
             TextResult = findViewById(R.id.GameResult);
             TextResult.setText(R.string.Win);
@@ -65,6 +62,7 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
             intent.putExtra(TIME_PASSED, timePassed);
         this.startActivity(intent);
     }
+
     private void updateRecords(MineSweeperRecord newRecord, int level) {
         MineSweeperRecord[] currentLevelRecords = getCurrentLevelRecords(level);
         if (newRecord.getTime() < currentLevelRecords[0].getTime()) { // if first place - move all the elements one index away from the first place
@@ -78,6 +76,7 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
         }
         setCurrentLevelRecords(level, currentLevelRecords);
     }
+
     private MineSweeperRecord[] getCurrentLevelRecords(int level) {
         MineSweeperRecord[] currentLevelRecords = createEmptyRecords();
         switch (level) {
