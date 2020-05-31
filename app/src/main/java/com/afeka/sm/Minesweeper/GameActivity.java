@@ -37,7 +37,7 @@ public class GameActivity extends AppCompatActivity implements Finals {
         Intent activityCalled = getIntent();
         sharedPref = GameActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
         level = Objects.requireNonNull(activityCalled.getExtras()).getInt(LEVEL_ACTIVITY_KEY);
-//        initiateRecords(); // for testing only!! run once
+        initiateRecords(); // for testing only!! run once
         game = new Game(level);
         handleUpperLayout(level);
         handleGridView();

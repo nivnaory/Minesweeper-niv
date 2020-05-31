@@ -51,7 +51,7 @@ public class InputFragment extends DialogFragment {
         alertDialogBuilder.setMessage("Please Enter Your Name");
         editText = new EditText(this.getActivity());
         alertDialogBuilder.setView(editText);
-        alertDialogBuilder.setIcon(R.drawable.winner);
+//        alertDialogBuilder.setIcon(R.drawable.winner);
         alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -19,7 +19,7 @@ import com.example.mineswipper.R;
 import java.util.Objects;
 
 
-public class GameOverActivity extends AppCompatActivity implements Finals , InputFragment.OnDataPass {
+public class GameOverActivity extends AppCompatActivity implements Finals, InputFragment.OnDataPass {
     TextView TextResult;
     boolean win;
     SharedPreferences sharedPref;
@@ -27,6 +27,7 @@ public class GameOverActivity extends AppCompatActivity implements Finals , Inpu
     int level;
     String userName;
     Fragment fragment;
+    boolean hasTheUserBrokenARecord;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +39,8 @@ public class GameOverActivity extends AppCompatActivity implements Finals , Inpu
         if (win) {
             level = activity.getExtras().getInt(LEVEL_ACTIVITY_KEY);
             timePassed = activity.getExtras().getInt(TIME_PASSED);
-            StartInputFragment();
-            if(hasTheUserBrokenARecord(level,timePassed)){
+            boolean hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
+            if (hasTheUserBrokenARecord) {
                 StartInputFragment();
             }
             TextResult = findViewById(R.id.GameResult);
@@ -60,14 +61,19 @@ public class GameOverActivity extends AppCompatActivity implements Finals , Inpu
 
 
     public void StartNewGame(View view) {
+        Log.d("Input Name: ", userName + "from startNewGame !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         Intent intent = new Intent(this, DifficultyChooserActivity.class);
-        boolean hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
+//        boolean hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
         intent.putExtra(HAS_THE_USER_BROKEN_A_RECORD, hasTheUserBrokenARecord);
-        intent.putExtra(LEVEL_ACTIVITY_KEY, level);
-        if (hasTheUserBrokenARecord)
-            intent.putExtra(TIME_PASSED, timePassed);
+        if (hasTheUserBrokenARecord) {
+            MineSweeperRecord newRecord = new MineSweeperRecord(userName, timePassed);
+            updateRecords(newRecord, level);
+            intent.putExtra(LEVEL_ACTIVITY_KEY, level);
+        }
+//            intent.putExtra(TIME_PASSED, timePassed);
         this.startActivity(intent);
     }
+
     private void updateRecords(MineSweeperRecord newRecord, int level) {
         MineSweeperRecord[] currentLevelRecords = getCurrentLevelRecords(level);
         if (newRecord.getTime() < currentLevelRecords[0].getTime()) { // if first place - move all the elements one index away from the first place
@@ -81,6 +87,7 @@ public class GameOverActivity extends AppCompatActivity implements Finals , Inpu
         }
         setCurrentLevelRecords(level, currentLevelRecords);
     }
+
     private MineSweeperRecord[] getCurrentLevelRecords(int level) {
         MineSweeperRecord[] currentLevelRecords = createEmptyRecords();
         switch (level) {
@@ -169,6 +176,6 @@ public class GameOverActivity extends AppCompatActivity implements Finals , Inpu
     //GET THE USER NAME FROM THE FRAGMENT---NIV
     @Override
     public void onDataPass(String data) {
-        userName=data;
+        userName = data;
     }
 }

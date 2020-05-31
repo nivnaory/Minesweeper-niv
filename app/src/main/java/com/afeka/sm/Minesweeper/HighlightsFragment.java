@@ -42,8 +42,8 @@ public class HighlightsFragment extends Fragment implements Finals {
 
     public void updateFragmentFields(View view, int level) {
         MineSweeperRecord[] currentRecords = getCurrentLevelRecords(level);
-        TextView easyFirstPlaceName = (TextView) view.findViewById(R.id.EasyFirstPlaceName);
-        TextView easyFirstPlaceTime = (TextView) view.findViewById(R.id.EasyFirstPlaceTime);
+        TextView easyFirstPlaceName = view.findViewById(R.id.EasyFirstPlaceName);
+        TextView easyFirstPlaceTime = view.findViewById(R.id.EasyFirstPlaceTime);
 
 
         easyFirstPlaceName.setText(currentRecords[0].getName());
