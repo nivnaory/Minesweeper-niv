@@ -11,6 +11,8 @@ import android.widget.Button;
 
 import com.example.mineswipper.R;
 
+import java.util.Objects;
+
 
 public class DifficultyChooserActivity extends AppCompatActivity implements Finals {
     int level;
@@ -26,20 +28,9 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
 
         StartHighlightsFragment();
 
-//        handleRecords();
-//
         handleLastLevelMarking();
 
     }
-
-//    private void handleRecords() {
-//        boolean hasTheUserBrokenARecord = getIntent().getBooleanExtra(HAS_THE_USER_BROKEN_A_RECORD, false);
-//        if (hasTheUserBrokenARecord) {
-//            int newRecord = Objects.requireNonNull(getIntent().getExtras()).getInt(TIME_PASSED);
-//            int lastGameLevel = getIntent().getExtras().getInt(LEVEL_ACTIVITY_KEY);
-//            handleBrokenRecord(lastGameLevel, newRecord);
-//        }
-//}
 
     private void handleLastLevelMarking() {
         int lastLevelThatWasChosen = sharedPref.getInt(String.valueOf(R.integer.LastChosenLevel), 0);
@@ -58,13 +49,21 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
 
     public void StartHighlightsFragment() {
         fragment = new HighlightsFragment();
+
+        boolean hasAnyoneBrokenARecord = true;
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            //TODO: Why does it always return the default value?!?!?!?!?!?
+            hasAnyoneBrokenARecord = intent.getBooleanExtra(HAS_THE_USER_BROKEN_A_RECORD, false);
+            //TODO: Why does it always return the default value?!?!?!?!?!?
+        }
         Bundle data = new Bundle();
-        Boolean hasAnyoneBrokenARecord = getIntent().getBooleanExtra(HAS_THE_USER_BROKEN_A_RECORD, false);
+        data.putBoolean(HAS_THE_USER_BROKEN_A_RECORD, hasAnyoneBrokenARecord);
         if (hasAnyoneBrokenARecord) {
             level = getIntent().getIntExtra(LEVEL_ACTIVITY_KEY, 0);
             data.putInt(LEVEL_ACTIVITY_KEY, level);
         }
-        data.putBoolean(HAS_THE_USER_BROKEN_A_RECORD, hasAnyoneBrokenARecord);
         fragment.setArguments(data);
 
         getSupportFragmentManager()
@@ -72,6 +71,7 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
                 .replace(R.id.Fhighlight, fragment)
                 .commit();
         getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+
     }
 
     private void markLastChosenLevel(int chosenLevel) {
