@@ -10,4 +10,6 @@
 .idea/*
 *vcs.xml
 *gradle*
+build.gradle
+gradle/wrapper/gradle-wrapper.properties
 

@@ -147,19 +147,19 @@ public class GameActivity extends AppCompatActivity implements Finals {
         this.startActivity(intent);
     }
 
-//    public void initiateRecords() { // TODO for testing only!! run once
-//        SharedPreferences.Editor editor = sharedPref.edit();
-//        editor.putInt(String.valueOf(R.id.EasyFirstPlaceTime), INITIAL_RECORD_VALUE);
-//        editor.putInt(String.valueOf(R.id.EasySecondPlaceTime), INITIAL_RECORD_VALUE);
-//        editor.putInt(String.valueOf(R.id.EasyThirdPlaceTime), INITIAL_RECORD_VALUE);
-//        editor.putInt(String.valueOf(R.id.MediumFirstPlaceTime), INITIAL_RECORD_VALUE);
-//        editor.putInt(String.valueOf(R.id.MediumSecondPlaceTime), INITIAL_RECORD_VALUE);
-//        editor.putInt(String.valueOf(R.id.MediumThirdPlaceTime), INITIAL_RECORD_VALUE);
-//        editor.putInt(String.valueOf(R.id.HardFirstPlaceTime), INITIAL_RECORD_VALUE);
-//        editor.putInt(String.valueOf(R.id.HardSecondPlaceTime), INITIAL_RECORD_VALUE);
-//        editor.putInt(String.valueOf(R.id.HardThirdPlaceTime), INITIAL_RECORD_VALUE);
-//        editor.apply();
-//    }
+    public void initiateRecords() { // TODO for testing only!! run once
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(String.valueOf(R.id.EasyFirstPlaceTime), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.id.EasySecondPlaceTime), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.id.EasyThirdPlaceTime), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.id.MediumFirstPlaceTime), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.id.MediumSecondPlaceTime), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.id.MediumThirdPlaceTime), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.id.HardFirstPlaceTime), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.id.HardSecondPlaceTime), INITIAL_RECORD_VALUE);
+        editor.putInt(String.valueOf(R.id.HardThirdPlaceTime), INITIAL_RECORD_VALUE);
+        editor.apply();
+    }
 
     @Override
     protected void onPause() {

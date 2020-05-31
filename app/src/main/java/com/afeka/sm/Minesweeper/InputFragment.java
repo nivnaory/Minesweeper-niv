@@ -55,7 +55,6 @@ public class InputFragment extends DialogFragment {
         alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 //Pass the Name to GameOverActivity
                 dataPasser.onDataPass(editText.getText().toString());
 
@@ -130,7 +129,7 @@ public class InputFragment extends DialogFragment {
                 getActivity());
         builder.setTitle("You Brake a Record!!");
         builder.setMessage("Please Enter Your Name");
-        builder.setIcon(R.drawable.winner);
+//        builder.setIcon(R.drawable.winner);
         editText = new EditText(this.getActivity());
         builder.setView(editText);
         builder.setPositiveButton("Ok",

@@ -60,6 +60,10 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
         fragment = new HighlightsFragment();
         Bundle data = new Bundle();
         Boolean hasAnyoneBrokenARecord = getIntent().getBooleanExtra(HAS_THE_USER_BROKEN_A_RECORD, false);
+        if (hasAnyoneBrokenARecord) {
+            level = getIntent().getIntExtra(LEVEL_ACTIVITY_KEY, 0);
+            data.putInt(LEVEL_ACTIVITY_KEY, level);
+        }
         data.putBoolean(HAS_THE_USER_BROKEN_A_RECORD, hasAnyoneBrokenARecord);
         fragment.setArguments(data);
 

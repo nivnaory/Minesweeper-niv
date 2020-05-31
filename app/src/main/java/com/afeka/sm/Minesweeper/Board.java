@@ -148,6 +148,10 @@ public class Board implements Finals {
         if (!currentTile.isDiscovered()) {
             boolean wasFlagPlaced = currentTile.handleFlag();
             numOfFlags = wasFlagPlaced == true ? numOfFlags - 1 : numOfFlags + 1;
+            if (numOfFlags < 0) {
+                wasFlagPlaced = currentTile.handleFlag();
+                numOfFlags = wasFlagPlaced == true ? numOfFlags - 1 : numOfFlags + 1;
+            }
         }
     }
 
