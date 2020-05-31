@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,19 +13,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mineswipper.R;
 
 import java.util.Objects;
 
 
-public class GameOverActivity extends AppCompatActivity implements Finals {
+public class GameOverActivity extends AppCompatActivity implements Finals, InputFragment.OnDataPass {
     TextView TextResult;
     boolean win;
     SharedPreferences sharedPref;
     int timePassed;
     int level;
     Fragment fragment;
+    String nameOfUser;
+    Bundle bundle;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +41,7 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
             level = activity.getExtras().getInt(LEVEL_ACTIVITY_KEY);
             timePassed = activity.getExtras().getInt(TIME_PASSED);
             StartInputFragment();
-            if(hasTheUserBrokenARecord(level,timePassed)){
+            if (hasTheUserBrokenARecord(level, timePassed)) {
             }
             TextResult = findViewById(R.id.GameResult);
             TextResult.setText(R.string.Win);
@@ -65,6 +69,7 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
             intent.putExtra(TIME_PASSED, timePassed);
         this.startActivity(intent);
     }
+
     private void updateRecords(MineSweeperRecord newRecord, int level) {
         MineSweeperRecord[] currentLevelRecords = getCurrentLevelRecords(level);
         if (newRecord.getTime() < currentLevelRecords[0].getTime()) { // if first place - move all the elements one index away from the first place
@@ -78,6 +83,7 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
         }
         setCurrentLevelRecords(level, currentLevelRecords);
     }
+
     private MineSweeperRecord[] getCurrentLevelRecords(int level) {
         MineSweeperRecord[] currentLevelRecords = createEmptyRecords();
         switch (level) {
@@ -153,15 +159,15 @@ public class GameOverActivity extends AppCompatActivity implements Finals {
     }
 
     public void StartInputFragment() {
-        // TODO: bring the actual data to be updated
-        fragment = new InputFragment();
-        Bundle data = new Bundle();
-        String test = "test";
-        data.putString("Test", test);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.gameOverScreen, fragment)
-                .commit();
-        getSupportFragmentManager().beginTransaction().hide(fragment).commit();
+        FragmentManager fm = getSupportFragmentManager();
+        InputFragment editInputFragment = InputFragment.newInstance("Congratulations you've broken a new record");
+        editInputFragment.show(fm, "niv");
+    }
+
+    @Override
+
+    //get the UserName From the Fragment
+    public void onDataPass(String data) {
+        nameOfUser=data;
     }
 }
