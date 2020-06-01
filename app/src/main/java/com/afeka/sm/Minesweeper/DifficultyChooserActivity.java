@@ -19,6 +19,7 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
     SharedPreferences sharedPref;
     boolean isShowed = true;
     Fragment fragment;
+    boolean hasTheUserBrokenARecord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +51,13 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
     public void StartHighlightsFragment() {
         fragment = new HighlightsFragment();
 
-        boolean hasAnyoneBrokenARecord = true;
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            //TODO: Why does it always return the default value?!?!?!?!?!?
-            hasAnyoneBrokenARecord = intent.getBooleanExtra(HAS_THE_USER_BROKEN_A_RECORD, false);
-            //TODO: Why does it always return the default value?!?!?!?!?!?
-        }
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+            hasTheUserBrokenARecord = getIntent().getBooleanExtra(HAS_THE_USER_BROKEN_A_RECORD, false);
+
         Bundle data = new Bundle();
-        data.putBoolean(HAS_THE_USER_BROKEN_A_RECORD, hasAnyoneBrokenARecord);
-        if (hasAnyoneBrokenARecord) {
+        data.putBoolean(HAS_THE_USER_BROKEN_A_RECORD, hasTheUserBrokenARecord);
+        if (hasTheUserBrokenARecord) {
             level = getIntent().getIntExtra(LEVEL_ACTIVITY_KEY, 0);
             data.putInt(LEVEL_ACTIVITY_KEY, level);
         }
@@ -71,7 +68,6 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
                 .replace(R.id.Fhighlight, fragment)
                 .commit();
         getSupportFragmentManager().beginTransaction().hide(fragment).commit();
-
     }
 
     private void markLastChosenLevel(int chosenLevel) {

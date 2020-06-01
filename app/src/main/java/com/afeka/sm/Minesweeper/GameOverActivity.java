@@ -61,6 +61,7 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
 
 
     public void StartNewGame(View view) {
+        hasTheUserBrokenARecord = hasTheUserBrokenARecord(level,timePassed);
         Log.d("Input Name: ", userName + "from startNewGame !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         Intent intent = new Intent(this, DifficultyChooserActivity.class);
 //        boolean hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
