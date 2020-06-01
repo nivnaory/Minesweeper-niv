@@ -22,14 +22,12 @@ import android.widget.Toast;
 import com.example.mineswipper.R;
 public class InputFragment extends DialogFragment {
     SharedPreferences sharedPref;
-    private View view;
     private EditText editText;
-    String name;
     private Toast toast;
     OnDataPass dataPasser;
 
     public interface OnDataPass {
-        public void onDataPass(String data);
+        void onDataPass(String data);
     }
 
     public InputFragment(){

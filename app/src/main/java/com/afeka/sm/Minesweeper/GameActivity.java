@@ -37,7 +37,9 @@ public class GameActivity extends AppCompatActivity implements Finals {
         Intent activityCalled = getIntent();
         sharedPref = GameActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
         level = Objects.requireNonNull(activityCalled.getExtras()).getInt(LEVEL_ACTIVITY_KEY);
-        initiateRecords(); // for testing only!! run once
+
+//        initiateRecords(); // for testing only!! run once
+
         game = new Game(level);
         handleUpperLayout(level);
         handleGridView();
@@ -158,6 +160,16 @@ public class GameActivity extends AppCompatActivity implements Finals {
         editor.putInt(String.valueOf(R.id.HardFirstPlaceTime), INITIAL_RECORD_VALUE);
         editor.putInt(String.valueOf(R.id.HardSecondPlaceTime), INITIAL_RECORD_VALUE);
         editor.putInt(String.valueOf(R.id.HardThirdPlaceTime), INITIAL_RECORD_VALUE);
+
+        editor.putString(String.valueOf(R.id.EasyFirstPlaceName), "Initial");
+        editor.putString(String.valueOf(R.id.EasySecondPlaceName), "Initial");
+        editor.putString(String.valueOf(R.id.EasyThirdPlaceName), "Initial");
+        editor.putString(String.valueOf(R.id.MediumFirstPlaceName), "Initial");
+        editor.putString(String.valueOf(R.id.MediumSecondPlaceName), "Initial");
+        editor.putString(String.valueOf(R.id.MediumThirdPlaceName), "Initial");
+        editor.putString(String.valueOf(R.id.HardFirstPlaceName), "Initial");
+        editor.putString(String.valueOf(R.id.HardSecondPlaceName), "Initial");
+        editor.putString(String.valueOf(R.id.HardThirdPlaceName), "Initial");
         editor.apply();
     }
 

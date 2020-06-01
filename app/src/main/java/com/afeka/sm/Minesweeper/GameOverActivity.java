@@ -61,31 +61,29 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
 
 
     public void StartNewGame(View view) {
-        hasTheUserBrokenARecord = hasTheUserBrokenARecord(level,timePassed);
-        Log.d("Input Name: ", userName + "from startNewGame !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
         Intent intent = new Intent(this, DifficultyChooserActivity.class);
-//        boolean hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
-        intent.putExtra(HAS_THE_USER_BROKEN_A_RECORD, hasTheUserBrokenARecord);
+//        intent.putExtra(HAS_THE_USER_BROKEN_A_RECORD, hasTheUserBrokenARecord);
         if (hasTheUserBrokenARecord) {
             MineSweeperRecord newRecord = new MineSweeperRecord(userName, timePassed);
             updateRecords(newRecord, level);
-            intent.putExtra(LEVEL_ACTIVITY_KEY, level);
+//            intent.putExtra(LEVEL_ACTIVITY_KEY, level);
         }
-//            intent.putExtra(TIME_PASSED, timePassed);
         this.startActivity(intent);
     }
 
     private void updateRecords(MineSweeperRecord newRecord, int level) {
         MineSweeperRecord[] currentLevelRecords = getCurrentLevelRecords(level);
         if (newRecord.getTime() < currentLevelRecords[0].getTime()) { // if first place - move all the elements one index away from the first place
-            System.arraycopy(currentLevelRecords, 0, currentLevelRecords, 1, currentLevelRecords.length - 1);
+            for (int i = NUM_OF_RECORDS_TO_SAVE - 1; i > 0; i--)
+                currentLevelRecords[i] = currentLevelRecords[i - 1];
             currentLevelRecords[0] = newRecord;
         } else if (newRecord.getTime() < currentLevelRecords[1].getTime()) { // same for second place
-            System.arraycopy(currentLevelRecords, 0, currentLevelRecords, 1, currentLevelRecords.length - 2);
+            for (int i = NUM_OF_RECORDS_TO_SAVE - 1; i > 1; i--)
+                currentLevelRecords[i] = currentLevelRecords[i - 1];
             currentLevelRecords[1] = newRecord;
-        } else {
+        } else
             currentLevelRecords[2] = newRecord;
-        }
         setCurrentLevelRecords(level, currentLevelRecords);
     }
 
@@ -128,8 +126,10 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
     }
 
     private boolean hasTheUserBrokenARecord(int level, int time) {
+        if (!win)
+            return false;
         MineSweeperRecord[] currentLevelRecords = getCurrentLevelRecords(level);
-        return time < currentLevelRecords[2].getTime(); // [2] == third place
+        return time < currentLevelRecords[NUM_OF_RECORDS_TO_SAVE - 1].getTime(); // if smaller than last place
     }
 
     private void setCurrentLevelRecords(int level, MineSweeperRecord[] currentLevelRecords) {
@@ -167,8 +167,8 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
         // TODO: bring the actual data to be updated
         fragment = new InputFragment();
         Bundle data = new Bundle();
-        String test = "test";
-        data.putString("Test", test);
+//        String test = "test";
+//        data.putString("Test", test);
         FragmentManager fm = getSupportFragmentManager();
         InputFragment alertDialog = InputFragment.newInstance("Congratulations you've broken a new record");
         alertDialog.show(fm, "fragment_alert");

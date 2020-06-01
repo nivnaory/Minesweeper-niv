@@ -18,8 +18,7 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
     int level;
     SharedPreferences sharedPref;
     boolean isShowed = true;
-    Fragment fragment;
-    boolean hasTheUserBrokenARecord;
+    Fragment highlightsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +29,16 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
         StartHighlightsFragment();
 
         handleLastLevelMarking();
+    }
 
+    private void StartHighlightsFragment() {
+        highlightsFragment = new HighlightsFragment();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.Fhighlight, highlightsFragment)
+                .commit();
+        getSupportFragmentManager().beginTransaction().hide(highlightsFragment).commit();
     }
 
     private void handleLastLevelMarking() {
@@ -38,36 +46,6 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
         boolean hasTheUserAlreadyChoseALevel = lastLevelThatWasChosen != INITIAL_VALUE_OF_CHOSEN_LEVEL_BY_THE_USER;
         if (hasTheUserAlreadyChoseALevel)
             markLastChosenLevel(lastLevelThatWasChosen);
-    }
-
-    public void showHighlights(View view) {
-        isShowed = !isShowed;
-        if (!isShowed)
-            getSupportFragmentManager().beginTransaction().show(fragment).commit();
-        else
-            getSupportFragmentManager().beginTransaction().hide(fragment).commit();
-    }
-
-    public void StartHighlightsFragment() {
-        fragment = new HighlightsFragment();
-
-        Bundle extras = getIntent().getExtras();
-        if (extras != null)
-            hasTheUserBrokenARecord = getIntent().getBooleanExtra(HAS_THE_USER_BROKEN_A_RECORD, false);
-
-        Bundle data = new Bundle();
-        data.putBoolean(HAS_THE_USER_BROKEN_A_RECORD, hasTheUserBrokenARecord);
-        if (hasTheUserBrokenARecord) {
-            level = getIntent().getIntExtra(LEVEL_ACTIVITY_KEY, 0);
-            data.putInt(LEVEL_ACTIVITY_KEY, level);
-        }
-        fragment.setArguments(data);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.Fhighlight, fragment)
-                .commit();
-        getSupportFragmentManager().beginTransaction().hide(fragment).commit();
     }
 
     private void markLastChosenLevel(int chosenLevel) {
@@ -86,6 +64,14 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
         button.setBackgroundResource(R.color.ChosenButtonColor);
     }
 
+    public void showHighlights(View view) {
+        isShowed = !isShowed;
+        if (!isShowed)
+            getSupportFragmentManager().beginTransaction().show(highlightsFragment).commit();
+        else
+            getSupportFragmentManager().beginTransaction().hide(highlightsFragment).commit();
+    }
+
     public void startGame(View view) {
         Intent getNameScreenIntent = new Intent(this, GameActivity.class);
         switch (view.getId()) {
@@ -102,7 +88,6 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
         getNameScreenIntent.putExtra(LEVEL_ACTIVITY_KEY, level);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(String.valueOf(R.integer.LastChosenLevel), level);
-
         editor.apply();
         startActivity(getNameScreenIntent);
     }

@@ -24,31 +24,74 @@ public class HighlightsFragment extends Fragment implements Finals {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.highlights_fragment, container, false);
         sharedPref = this.getActivity().getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
-
-        return view;
+        return inflater.inflate(R.layout.highlights_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        boolean hasAnyoneBrokenARecord = getArguments().getBoolean(HAS_THE_USER_BROKEN_A_RECORD);
-        if (hasAnyoneBrokenARecord) {
-            int level = getArguments().getInt(LEVEL_ACTIVITY_KEY, 0);
-            updateFragmentFields(view, level);
-        }
+        updateRecords(view);
     }
 
-    public void updateFragmentFields(View view, int level) {
-        MineSweeperRecord[] currentRecords = getCurrentLevelRecords(level);
+    private void updateRecords(View view) {
+        updateEasyLevelRecords(view);
+        updateMediumLevelRecords(view);
+        updateHardLevelRecords(view);
+    }
+
+
+    private void updateEasyLevelRecords(View view) {
+        MineSweeperRecord[] currentRecords = getCurrentLevelRecords(EASY_LEVEL);
         TextView easyFirstPlaceName = view.findViewById(R.id.EasyFirstPlaceName);
         TextView easyFirstPlaceTime = view.findViewById(R.id.EasyFirstPlaceTime);
-
+        TextView easySecondPlaceName = view.findViewById(R.id.EasySecondPlaceName);
+        TextView easySecondPlaceTime = view.findViewById(R.id.EasySecondPlaceTime);
+        TextView easyThirdPlaceName = view.findViewById(R.id.EasyThirdPlaceName);
+        TextView easyThirdPlaceTime = view.findViewById(R.id.EasyThirdPlaceTime);
 
         easyFirstPlaceName.setText(currentRecords[0].getName());
         easyFirstPlaceTime.setText("" + currentRecords[0].getTime());
+        easySecondPlaceName.setText(currentRecords[1].getName());
+        easySecondPlaceTime.setText("" + currentRecords[1].getTime());
+        easyThirdPlaceName.setText(currentRecords[2].getName());
+        easyThirdPlaceTime.setText("" + currentRecords[2].getTime());
     }
+
+    private void updateMediumLevelRecords(View view) {
+        MineSweeperRecord[] currentRecords = getCurrentLevelRecords(MEDIUM_LEVEL);
+        TextView mediumFirstPlaceName = view.findViewById(R.id.MediumFirstPlaceName);
+        TextView mediumFirstPlaceTime = view.findViewById(R.id.MediumFirstPlaceTime);
+        TextView mediumSecondPlaceName = view.findViewById(R.id.MediumSecondPlaceName);
+        TextView mediumSecondPlaceTime = view.findViewById(R.id.MediumSecondPlaceTime);
+        TextView mediumThirdPlaceName = view.findViewById(R.id.MediumThirdPlaceName);
+        TextView mediumThirdPlaceTime = view.findViewById(R.id.MediumThirdPlaceTime);
+
+        mediumFirstPlaceName.setText(currentRecords[0].getName());
+        mediumFirstPlaceTime.setText("" + currentRecords[0].getTime());
+        mediumSecondPlaceName.setText(currentRecords[1].getName());
+        mediumSecondPlaceTime.setText("" + currentRecords[1].getTime());
+        mediumThirdPlaceName.setText(currentRecords[2].getName());
+        mediumThirdPlaceTime.setText("" + currentRecords[2].getTime());
+    }
+
+    private void updateHardLevelRecords(View view) {
+        MineSweeperRecord[] currentRecords = getCurrentLevelRecords(HARD_LEVEL);
+        TextView hardFirstPlaceName = view.findViewById(R.id.HardFirstPlaceName);
+        TextView hardFirstPlaceTime = view.findViewById(R.id.HardFirstPlaceTime);
+        TextView hardSecondPlaceName = view.findViewById(R.id.HardSecondPlaceName);
+        TextView hardSecondPlaceTime = view.findViewById(R.id.HardSecondPlaceTime);
+        TextView hardThirdPlaceName = view.findViewById(R.id.HardThirdPlaceName);
+        TextView hardThirdPlaceTime = view.findViewById(R.id.HardThirdPlaceTime);
+
+        hardFirstPlaceName.setText(currentRecords[0].getName());
+        hardFirstPlaceTime.setText("" + currentRecords[0].getTime());
+        hardSecondPlaceName.setText(currentRecords[1].getName());
+        hardSecondPlaceTime.setText("" + currentRecords[1].getTime());
+        hardThirdPlaceName.setText(currentRecords[2].getName());
+        hardThirdPlaceTime.setText("" + currentRecords[2].getTime());
+    }
+
 
     public MineSweeperRecord[] getCurrentLevelRecords(int level) {
         MineSweeperRecord[] currentLevelRecords = createEmptyRecords();
