@@ -36,7 +36,6 @@ public AnimationFramgent(){
         super.onStart();
         if (win) {
            // ((AnimationDrawable) getView().findViewById(R.id.Lose).getBackground()).start();
-            image=getView().findViewById(R.id.animation_id);
             ((AnimationDrawable)getView().findViewById(R.id.animation_id).getBackground()).start();
 
         }else{
