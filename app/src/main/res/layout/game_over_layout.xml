@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/BackgroundColor"
+    android:background="#FFFAFA"
     android:id="@+id/gameOverScreen"
     tools:context="com.afeka.sm.Minesweeper.GameOverActivity">
 
@@ -37,12 +37,15 @@
         android:onClick="StartNewGame"
         android:text="@string/StartNew"
         />
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="400dp"
         android:layout_marginBottom="100dp"
-       >
+        android:layout_marginRight="200dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/Animation_container"
+        android:animateLayoutChanges="true"
+        >
     </FrameLayout>
 </RelativeLayout>

@@ -103,12 +103,108 @@
     </TableLayout>
 
 
-    <!--MEDUIM LEVEL TABLE-->
+    <!--Hard LEVEL TABLE-->
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="400dp"
         android:layout_marginBottom="2dp"
+        android:padding="1dp">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/LevelHardLabel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="15dip"
+                android:text="@string/HardLevel"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/TimeHardLabel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="15dip"
+                android:text="@string/Time"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/HardFirstPlaceName"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="15dip"
+                android:text=" " />
+
+            <TextView
+                android:id="@+id/HardFirstPlaceTime"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="15dip"
+                android:text="100" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/HardSecondPlaceName"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="15dip"
+                android:text="niv" />
+
+            <TextView
+                android:id="@+id/HardSecondPlaceTime"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="15dip"
+                android:text="150" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/HardThirdPlaceName"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="15dip"
+                android:text="asaf" />
+
+            <TextView
+                android:id="@+id/HardThirdPlaceTime"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="15dip"
+                android:text="200" />
+        </TableRow>
+    </TableLayout>
+
+<!--Meduim Level Table -->
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="210dp"
         android:padding="1dp">
 
         <TableRow
@@ -192,102 +288,6 @@
 
             <TextView
                 android:id="@+id/MediumThirdPlaceTime"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="200" />
-        </TableRow>
-    </TableLayout>
-
-
-    <TableLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="210dp"
-        android:padding="1dp">
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/LevelHardLabel"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="@string/HardLevel"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimaryDark" />
-
-            <TextView
-                android:id="@+id/TimeHardLabel"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="@string/Time"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimary" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/HardFirstPlaceName"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="Omer" />
-
-            <TextView
-                android:id="@+id/HardFirstPlaceTime"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="100" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/HardSecondPlaceName"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="niv" />
-
-            <TextView
-                android:id="@+id/HardSecondPlaceTime"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="150" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/HardThirdPlaceName"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="asaf" />
-
-            <TextView
-                android:id="@+id/HardThirdPlaceTime"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"

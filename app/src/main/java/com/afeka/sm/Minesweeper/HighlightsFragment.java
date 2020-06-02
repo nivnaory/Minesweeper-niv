@@ -7,16 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import com.example.mineswipper.R;
 
-import java.util.Objects;
 
 public class HighlightsFragment extends Fragment implements Finals {
     SharedPreferences sharedPref;
@@ -104,6 +100,7 @@ public class HighlightsFragment extends Fragment implements Finals {
                 currentLevelRecords[2].setTime(sharedPref.getInt(String.valueOf(R.id.EasyThirdPlaceTime), 0));
                 currentLevelRecords[2].setName(sharedPref.getString(String.valueOf(R.id.EasyThirdPlaceName), ""));
                 break;
+
             case MEDIUM_LEVEL:
                 currentLevelRecords[0].setTime(sharedPref.getInt(String.valueOf(R.id.MediumFirstPlaceTime), 0));
                 currentLevelRecords[0].setName(sharedPref.getString(String.valueOf(R.id.MediumFirstPlaceName), ""));
@@ -112,6 +109,7 @@ public class HighlightsFragment extends Fragment implements Finals {
                 currentLevelRecords[2].setTime(sharedPref.getInt(String.valueOf(R.id.MediumThirdPlaceTime), 0));
                 currentLevelRecords[2].setName(sharedPref.getString(String.valueOf(R.id.MediumThirdPlaceName), ""));
                 break;
+
             default: // which is HARD_LEVEL
                 currentLevelRecords[0].setTime(sharedPref.getInt(String.valueOf(R.id.HardFirstPlaceTime), 0));
                 currentLevelRecords[0].setName(sharedPref.getString(String.valueOf(R.id.HardFirstPlaceName), ""));
@@ -120,6 +118,8 @@ public class HighlightsFragment extends Fragment implements Finals {
                 currentLevelRecords[2].setTime(sharedPref.getInt(String.valueOf(R.id.HardThirdPlaceTime), 0));
                 currentLevelRecords[2].setName(sharedPref.getString(String.valueOf(R.id.HardThirdPlaceName), ""));
                 break;
+
+
         }
         return currentLevelRecords;
     }

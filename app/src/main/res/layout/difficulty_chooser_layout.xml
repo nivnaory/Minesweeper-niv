@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/BackgroundColor"
+    android:background="#FFFAFA"
     tools:context="com.afeka.sm.Minesweeper.DifficultyChooserActivity">
 
 <ScrollView

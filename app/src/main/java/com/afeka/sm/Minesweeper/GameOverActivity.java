@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +27,8 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
     int timePassed;
     int level;
     String userName;
-    Fragment fragment;
+    Fragment fragmentInput;
+    Fragment fragmentAnimation;
     boolean hasTheUserBrokenARecord;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
 
         win = Objects.requireNonNull(activity.getExtras()).getBoolean(GAME_RESULT);
         if (win) {
+            StartAnimationFragment();
             level = activity.getExtras().getInt(LEVEL_ACTIVITY_KEY);
             timePassed = activity.getExtras().getInt(TIME_PASSED);
             boolean hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
@@ -46,6 +49,7 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
             TextResult = findViewById(R.id.GameResult);
             TextResult.setText(R.string.Win);
         } else {
+            StartAnimationFragment();
             TextResult = findViewById(R.id.GameResult);
             TextResult.setText(R.string.Lose);
         }
@@ -165,13 +169,20 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
 
     public void StartInputFragment() {
         // TODO: bring the actual data to be updated
-        fragment = new InputFragment();
-        Bundle data = new Bundle();
-//        String test = "test";
-//        data.putString("Test", test);
+        fragmentInput = new InputFragment();
         FragmentManager fm = getSupportFragmentManager();
         InputFragment alertDialog = InputFragment.newInstance("Congratulations you've broken a new record");
         alertDialog.show(fm, "fragment_alert");
+    }
+    public void StartAnimationFragment(){
+        fragmentAnimation = new AnimationFramgent();
+        Bundle bundle=new Bundle();
+        bundle.putBoolean("RESULT",win);
+        fragmentAnimation.setArguments(bundle);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.Animation_container, fragmentAnimation);
+       // transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     //GET THE USER NAME FROM THE FRAGMENT---NIV
@@ -180,3 +191,4 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
         userName = data;
     }
 }
+
