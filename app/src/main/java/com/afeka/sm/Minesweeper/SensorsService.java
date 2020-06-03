@@ -9,7 +9,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,35 +22,27 @@ interface SensorServiceListener {
     void alarmStateChanged(ALARM_STATE state, int timeSinceLastPositionChanged);
 }
 
-public class SensorsService extends Service implements SensorEventListener {
+public class SensorsService extends Service implements SensorEventListener, Finals {
 
-    private final static String TAG = "SENSOR_SERVICE";
-    private final double THRESHOLD = 1;
     private SensorServiceListener.ALARM_STATE currentAlarmState = SensorServiceListener.ALARM_STATE.ON_POSITION;
-
-
-    // Binder given to clients
     private final IBinder mBinder = new SensorServiceBinder();
+    private float initialX;
+    private float initialY;
+    private float initialZ;
     SensorServiceListener mListener;
     SensorManager mSensorManager;
     Sensor mAccel;
-    float initialX;
-    float initialY;
-    float initialZ;
     boolean isFirstEvent;
     int timeSinceLastPositionChanged;
-    MineSweeperTimerTask2 myTimerTask;
+    MineSweeperTimerTaskExtended myTimerTask;
 
     public class SensorServiceBinder extends Binder {
 
-
         void registerListener(SensorServiceListener listener) {
-            Log.d("Binder", "registering...");
             mListener = listener;
         }
 
         void unregisterListener(SensorServiceListener listener) {
-            Log.d("Binder", "unregistering...");
             mListener = null;
         }
 
@@ -63,7 +54,6 @@ public class SensorsService extends Service implements SensorEventListener {
         void stopSensors() {
             mSensorManager.unregisterListener(SensorsService.this);
         }
-
     }
 
 
@@ -73,20 +63,13 @@ public class SensorsService extends Service implements SensorEventListener {
     @Override
     public void onCreate() {
         super.onCreate();
-
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
-        //TODO if SensotManager != null
+        if (mSensorManager == null)
+            System.exit(1);
 
         mAccel = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
-        if (mAccel != null) {
-            Log.d("Sensors ouput", "Accelerometer avilable");
-        } else {
-            Log.d("Sensors ouput", "Accelerometer NOT Availible");
-        }
-
-//        timeSinceLastPositionChanged = 0;
+        if (mAccel == null)
+            System.exit(1);
     }
 
     @Override
@@ -99,57 +82,47 @@ public class SensorsService extends Service implements SensorEventListener {
         return mBinder;
     }
 
-    // Sensor event listener callbacks
-
-
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        initialize(event);
+        setInitialPosition(event);
 
         double absDiffX = Math.abs(initialX - event.values[0]);
         double absDiffY = Math.abs(initialY - event.values[1]);
         double absDiffZ = Math.abs(initialZ - event.values[2]);
 
-        Log.d("event", "" + event.values[0] + " " + event.values[1] + " " + event.values[2]);
-        Log.d("Diff", "" + absDiffX + " " + absDiffY + " " + absDiffZ);
-
         SensorServiceListener.ALARM_STATE previousState = currentAlarmState;
-        if (absDiffX > THRESHOLD || absDiffY > THRESHOLD || absDiffZ > THRESHOLD) {
+        if (absDiffX > SENSORS_THRESHOLD || absDiffY > SENSORS_THRESHOLD || absDiffZ > SENSORS_THRESHOLD)
             this.currentAlarmState = SensorServiceListener.ALARM_STATE.NOT_ON_POSITION;
-        } else {
+        else
             this.currentAlarmState = SensorServiceListener.ALARM_STATE.ON_POSITION;
-        }
+
 
         if (previousState != currentAlarmState) {
-            timeSinceLastPositionChanged = handleTimer(currentAlarmState);
-            mListener.alarmStateChanged(currentAlarmState, timeSinceLastPositionChanged);
+            handleTimer(currentAlarmState);
+            mListener.alarmStateChanged(currentAlarmState, 0);
         }
     }
 
-    private int handleTimer(SensorServiceListener.ALARM_STATE currentAlarmState) {
-        if (currentAlarmState == SensorServiceListener.ALARM_STATE.NOT_ON_POSITION) {
+    private void handleTimer(SensorServiceListener.ALARM_STATE currentAlarmState) {
+        if (currentAlarmState == SensorServiceListener.ALARM_STATE.NOT_ON_POSITION)
             runTimer();
-            return 0;
-        } else { // ON_POSITION
-            return timeSinceLastPositionChanged;
-        }
     }
 
     private void runTimer() {
         Timer timer = new Timer();
         if (myTimerTask != null)
             myTimerTask.cancel();
-        myTimerTask = new MineSweeperTimerTask2();
+        myTimerTask = new MineSweeperTimerTaskExtended();
         timer.schedule(myTimerTask, 0, 1000);
     }
 
-    class MineSweeperTimerTask2 extends TimerTask {
+    class MineSweeperTimerTaskExtended extends TimerTask {
+        // It's not that similar to the other class, hence we don't extend it, and we prefer to extend TimerTask
         private long firstClickTime = System.currentTimeMillis();
 
         @Override
@@ -159,11 +132,11 @@ public class SensorsService extends Service implements SensorEventListener {
                 @Override
                 public void run() {
                     timeSinceLastPositionChanged = (int) ((System.currentTimeMillis() - firstClickTime) / 1000);
-                    if (timeSinceLastPositionChanged % 5 == 0) {
-                        if (timeSinceLastPositionChanged >= 10 && currentAlarmState == SensorServiceListener.ALARM_STATE.NOT_ON_POSITION) {
+                    if (timeSinceLastPositionChanged % COVER_A_TILE_THRESHOLD == 0) {
+                        if (timeSinceLastPositionChanged >= INSERT_A_MINE_THRESHOLD && currentAlarmState == SensorServiceListener.ALARM_STATE.NOT_ON_POSITION) {
                             mListener.alarmStateChanged(currentAlarmState, timeSinceLastPositionChanged);
-                            timeSinceLastPositionChanged %= 10;
-                        } else if (timeSinceLastPositionChanged >= 5 && currentAlarmState == SensorServiceListener.ALARM_STATE.NOT_ON_POSITION)
+                            timeSinceLastPositionChanged %= INSERT_A_MINE_THRESHOLD;
+                        } else if (timeSinceLastPositionChanged >= COVER_A_TILE_THRESHOLD && currentAlarmState == SensorServiceListener.ALARM_STATE.NOT_ON_POSITION)
                             mListener.alarmStateChanged(currentAlarmState, timeSinceLastPositionChanged);
                     }
                 }
@@ -171,7 +144,7 @@ public class SensorsService extends Service implements SensorEventListener {
         }
     }
 
-    private void initialize(SensorEvent event) {
+    private void setInitialPosition(SensorEvent event) {
         if (isFirstEvent) {
             initialX = event.values[0];
             initialY = event.values[1];

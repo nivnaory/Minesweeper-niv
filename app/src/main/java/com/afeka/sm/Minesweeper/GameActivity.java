@@ -33,7 +33,6 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
     int currentTime;
     int level;
     SharedPreferences sharedPref;
-
     SensorsService.SensorServiceBinder mBinder;
     boolean isBound = false;
     boolean isFirstTime;
@@ -47,7 +46,6 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
         isFirstTime = true;
         sharedPref = GameActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
         level = Objects.requireNonNull(activityCalled.getExtras()).getInt(LEVEL_ACTIVITY_KEY);
-
         game = new Game(level);
         handleUpperLayout(level);
         handleGridView();
@@ -124,10 +122,10 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
 
     private void runTimer() {
         timer = new Timer();
-        timer.schedule(new mineSweeperTimerTask(), 0, 1000);
+        timer.schedule(new MineSweeperTimerTask(), 0, 1000);
     }
 
-    class mineSweeperTimerTask extends TimerTask {
+    class MineSweeperTimerTask extends TimerTask {
         private long firstClickTime = System.currentTimeMillis();
 
         @Override
@@ -147,10 +145,8 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.d("Service Connection", "bound to service");
             mBinder = (SensorsService.SensorServiceBinder) service;
             mBinder.registerListener(GameActivity.this);
-            Log.d("Service Connection", "registered as listener");
             isBound = true;
             mBinder.startSensors(isFirstTime);
             isFirstTime = false;
@@ -159,7 +155,8 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
         @Override
         public void onServiceDisconnected(ComponentName name) {
             isBound = false;
-            mBinder.stopSensors(); // test
+            mBinder.unregisterListener(GameActivity.this);
+            mBinder.stopSensors();
         }
     };
 
@@ -203,14 +200,11 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("onStart", " was called...");
-//        Intent intent = new Intent(this, SensorsService.class);
         bindService(new Intent(this, SensorsService.class), mConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
     protected void onStop() {
-        Log.d("onStop", " was called...");
         super.onStop();
         if (isBound) {
             unbindService(mConnection);
@@ -221,10 +215,6 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        if (mConnection != null) {
-            unbindService(mConnection);
-        }
     }
 
 
