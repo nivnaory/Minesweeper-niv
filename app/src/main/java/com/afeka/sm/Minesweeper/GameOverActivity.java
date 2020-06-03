@@ -37,22 +37,20 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
         Intent activity = getIntent();
         sharedPref = GameOverActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
 
+        TextResult = findViewById(R.id.GameResult);
         win = Objects.requireNonNull(activity.getExtras()).getBoolean(GAME_RESULT);
         if (win) {
-            StartAnimationFragment();
             level = activity.getExtras().getInt(LEVEL_ACTIVITY_KEY);
             timePassed = activity.getExtras().getInt(TIME_PASSED);
             boolean hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
-            if (hasTheUserBrokenARecord) {
+            if (hasTheUserBrokenARecord)
                 StartInputFragment();
-            }
-            TextResult = findViewById(R.id.GameResult);
+
             TextResult.setText(R.string.Win);
-        } else {
-            StartAnimationFragment();
-            TextResult = findViewById(R.id.GameResult);
+        } else
             TextResult.setText(R.string.Lose);
-        }
+
+        StartAnimationFragment();
         Button exitButton = findViewById(R.id.ExitButton);
         exitButton.setOnClickListener(new View.OnClickListener() {
 
@@ -67,11 +65,9 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
     public void StartNewGame(View view) {
         hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
         Intent intent = new Intent(this, DifficultyChooserActivity.class);
-//        intent.putExtra(HAS_THE_USER_BROKEN_A_RECORD, hasTheUserBrokenARecord);
         if (hasTheUserBrokenARecord) {
             MineSweeperRecord newRecord = new MineSweeperRecord(userName, timePassed);
             updateRecords(newRecord, level);
-//            intent.putExtra(LEVEL_ACTIVITY_KEY, level);
         }
         this.startActivity(intent);
     }
@@ -168,27 +164,24 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
     }
 
     public void StartInputFragment() {
-        // TODO: bring the actual data to be updated
         fragmentInput = new InputFragment();
         FragmentManager fm = getSupportFragmentManager();
-        InputFragment alertDialog = InputFragment.newInstance("Congratulations you've broken a new record");
-        alertDialog.show(fm, "fragment_alert");
+        InputFragment alertDialog = InputFragment.newInstance(String.valueOf(R.string.CongratulationsMessage));
+        alertDialog.show(fm, FRAGMENT_ALERT);
     }
-    public void StartAnimationFragment(){
-        fragmentAnimation = new AnimationFramgent();
-        Bundle bundle=new Bundle();
-        bundle.putBoolean("RESULT",win);
+
+    public void StartAnimationFragment() {
+        fragmentAnimation = new AnimationFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(GAME_RESULT, win);
         fragmentAnimation.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.Animation_container, fragmentAnimation);
-       // transaction.addToBackStack(null);
         transaction.commit();
     }
 
-    //GET THE USER NAME FROM THE FRAGMENT---NIV
     @Override
     public void onDataPass(String data) {
         userName = data;
     }
 }
-

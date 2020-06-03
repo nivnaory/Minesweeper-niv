@@ -135,10 +135,10 @@ public class HighlightsFragment extends Fragment implements Finals {
         return currentLevelRecords;
     }
 
-    public void initiateRecordsIfRequired() { // TODO for testing only!! run once
+    public void initiateRecordsIfRequired() {
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        String isFirstTime = sharedPref.getString(String.valueOf(R.string.IsFirstTime),"True");
+        String isFirstTime = sharedPref.getString(String.valueOf(R.string.IsFirstTime), "True");
         if (isFirstTime.equals("True")) {
             editor.putString(String.valueOf(R.string.IsFirstTime), "False");
             editor.apply();

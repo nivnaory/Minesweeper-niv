@@ -18,6 +18,11 @@
 
     <string name="IsFirstTime">True</string>
 
+    <string name="PleaseEnterYourName">Please Enter Your Name</string>
+    <string name="ConfirmationButton">OK</string>
+    <string name="SavedConfirmation">Saved</string>
+    <string name="CongratulationsMessage">Congratulations you have broken a new record</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
