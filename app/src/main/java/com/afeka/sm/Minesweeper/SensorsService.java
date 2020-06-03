@@ -56,7 +56,6 @@ public class SensorsService extends Service implements SensorEventListener, Fina
         }
     }
 
-
     public SensorsService() {
     }
 
