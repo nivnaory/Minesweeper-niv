@@ -1,9 +1,13 @@
 package com.afeka.sm.Minesweeper;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.content.Intent;
@@ -16,7 +20,7 @@ import java.util.TimerTask;
 
 import com.example.mineswipper.R;
 
-public class GameActivity extends AppCompatActivity implements Finals {
+public class GameActivity extends AppCompatActivity implements Finals, SensorServiceListener {
     Game game;
     GridView gridView;
     TileAdapter tileAdapter;
@@ -30,11 +34,17 @@ public class GameActivity extends AppCompatActivity implements Finals {
     int level;
     SharedPreferences sharedPref;
 
+    SensorsService.SensorServiceBinder mBinder;
+    boolean isBound = false;
+    boolean isFirstTime;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
 
         Intent activityCalled = getIntent();
+        isFirstTime = true;
         sharedPref = GameActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
         level = Objects.requireNonNull(activityCalled.getExtras()).getInt(LEVEL_ACTIVITY_KEY);
 
@@ -133,6 +143,26 @@ public class GameActivity extends AppCompatActivity implements Finals {
         }
     }
 
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.d("Service Connection", "bound to service");
+            mBinder = (SensorsService.SensorServiceBinder) service;
+            mBinder.registerListener(GameActivity.this);
+            Log.d("Service Connection", "registered as listener");
+            isBound = true;
+            mBinder.startSensors(isFirstTime);
+            isFirstTime = false;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBound = false;
+            mBinder.stopSensors(); // test
+        }
+    };
+
     private void updateNumOfFlagsView(int numberOfFlags) {
         numOfFlagsView.setText("Num Of Flags: " + Integer.toString(numberOfFlags));
     }
@@ -152,7 +182,11 @@ public class GameActivity extends AppCompatActivity implements Finals {
     protected void onPause() {
         super.onPause();
         timeSoFar = currentTime;
-        timer.cancel();
+        if (timer != null)
+            timer.cancel();
+        if (isBound) {
+            mBinder.stopSensors();
+        }
     }
 
     @Override
@@ -160,5 +194,42 @@ public class GameActivity extends AppCompatActivity implements Finals {
         super.onResume();
         if (haveTheUserClickedForTheFirstTime) // so the timer will run only after the user clicks
             runTimer();
+        if (isBound) {
+            mBinder.startSensors(isFirstTime);
+            isFirstTime = false;
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("onStart", " was called...");
+//        Intent intent = new Intent(this, SensorsService.class);
+        bindService(new Intent(this, SensorsService.class), mConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d("onStop", " was called...");
+        super.onStop();
+        if (isBound) {
+            unbindService(mConnection);
+            isBound = false;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (mConnection != null) {
+            unbindService(mConnection);
+        }
+    }
+
+
+    @Override
+    public void alarmStateChanged(ALARM_STATE state, int timeSinceLastPositionChanged) {
+        Log.d("ALARM! ", "" + state + " " + timeSinceLastPositionChanged);
     }
 }

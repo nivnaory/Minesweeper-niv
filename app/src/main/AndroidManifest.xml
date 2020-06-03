@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:testOnly="false">
+        android:testOnly="false"
+
+        >
 
         <activity android:name="com.afeka.sm.Minesweeper.DifficultyChooserActivity">
             <intent-filter>
@@ -22,13 +24,17 @@
             android:name="com.afeka.sm.Minesweeper.GameActivity"
             android:label="Mineswipper"
             android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize"
             />
         <activity
             android:name="com.afeka.sm.Minesweeper.GameOverActivity"
             android:label="Mineswipper"
             android:theme="@style/AppTheme"
             />
-
+        <service
+            android:name=".SensorsService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>
