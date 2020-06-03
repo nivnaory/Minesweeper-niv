@@ -29,6 +29,8 @@ public interface Finals {
     String LEVEL_ACTIVITY_KEY = "level Activity";
     String GAME_RESULT = "GameResult";
 
+    String INITIAL_NAME = "initial";
+
     String TIME_PASSED = "timePassed";
 
     String APP_CHOSEN_NAME = "myPreferencesFile";

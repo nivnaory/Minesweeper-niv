@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.example.mineswipper.R;
 
 
@@ -21,6 +22,7 @@ public class HighlightsFragment extends Fragment implements Finals {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         sharedPref = this.getActivity().getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
+        initiateRecordsIfRequired();
         return inflater.inflate(R.layout.highlights_fragment, container, false);
     }
 
@@ -90,6 +92,7 @@ public class HighlightsFragment extends Fragment implements Finals {
 
 
     public MineSweeperRecord[] getCurrentLevelRecords(int level) {
+
         MineSweeperRecord[] currentLevelRecords = createEmptyRecords();
         switch (level) {
             case EASY_LEVEL:
@@ -126,8 +129,40 @@ public class HighlightsFragment extends Fragment implements Finals {
 
     public MineSweeperRecord[] createEmptyRecords() {
         MineSweeperRecord[] currentLevelRecords = new MineSweeperRecord[NUM_OF_RECORDS_TO_SAVE];
-        for (int i = 0; i < NUM_OF_RECORDS_TO_SAVE; i++)
+        for (int i = 0; i < NUM_OF_RECORDS_TO_SAVE; i++) {
             currentLevelRecords[i] = new MineSweeperRecord();
+        }
         return currentLevelRecords;
+    }
+
+    public void initiateRecordsIfRequired() { // TODO for testing only!! run once
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        String isFirstTime = sharedPref.getString(String.valueOf(R.string.IsFirstTime),"True");
+        if (isFirstTime.equals("True")) {
+            editor.putString(String.valueOf(R.string.IsFirstTime), "False");
+            editor.apply();
+
+            editor.putInt(String.valueOf(R.id.EasyFirstPlaceTime), INITIAL_RECORD_VALUE);
+            editor.putInt(String.valueOf(R.id.EasySecondPlaceTime), INITIAL_RECORD_VALUE);
+            editor.putInt(String.valueOf(R.id.EasyThirdPlaceTime), INITIAL_RECORD_VALUE);
+            editor.putInt(String.valueOf(R.id.MediumFirstPlaceTime), INITIAL_RECORD_VALUE);
+            editor.putInt(String.valueOf(R.id.MediumSecondPlaceTime), INITIAL_RECORD_VALUE);
+            editor.putInt(String.valueOf(R.id.MediumThirdPlaceTime), INITIAL_RECORD_VALUE);
+            editor.putInt(String.valueOf(R.id.HardFirstPlaceTime), INITIAL_RECORD_VALUE);
+            editor.putInt(String.valueOf(R.id.HardSecondPlaceTime), INITIAL_RECORD_VALUE);
+            editor.putInt(String.valueOf(R.id.HardThirdPlaceTime), INITIAL_RECORD_VALUE);
+
+            editor.putString(String.valueOf(R.id.EasyFirstPlaceName), INITIAL_NAME);
+            editor.putString(String.valueOf(R.id.EasySecondPlaceName), INITIAL_NAME);
+            editor.putString(String.valueOf(R.id.EasyThirdPlaceName), INITIAL_NAME);
+            editor.putString(String.valueOf(R.id.MediumFirstPlaceName), INITIAL_NAME);
+            editor.putString(String.valueOf(R.id.MediumSecondPlaceName), INITIAL_NAME);
+            editor.putString(String.valueOf(R.id.MediumThirdPlaceName), INITIAL_NAME);
+            editor.putString(String.valueOf(R.id.HardFirstPlaceName), INITIAL_NAME);
+            editor.putString(String.valueOf(R.id.HardSecondPlaceName), INITIAL_NAME);
+            editor.putString(String.valueOf(R.id.HardThirdPlaceName), INITIAL_NAME);
+            editor.apply();
+        }
     }
 }
