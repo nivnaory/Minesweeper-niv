@@ -64,10 +64,8 @@ public class Tile implements Finals {
     }
 
     public void setCoverd() {
-        if (isDiscovered) {
             this.isDiscovered = false;
             setShowToUser(EMPTY);
-        }
     }
 
     public char getStatus() {

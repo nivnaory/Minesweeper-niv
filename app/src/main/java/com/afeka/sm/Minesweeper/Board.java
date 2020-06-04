@@ -82,7 +82,6 @@ public class Board implements Finals {
         if (!currentTile.isDiscovered() && !currentTile.hasFlag()) {
             currentTile.setDiscovered();
             char status = currentTile.getStatus();
-            currentTile.setShowToUser(status);
             int statusAsAnInteger = Character.getNumericValue(status);
             if (Character.isDigit(status) && statusAsAnInteger > 0 && statusAsAnInteger < 9)
                 currentTile.setShowToUser(status); //which is a (char) number
@@ -137,6 +136,7 @@ public class Board implements Finals {
             for (int j = 0; j < size; j++)
                 if (grid[i][j].hasMine())
                     grid[i][j].setDiscovered();
+
         grid[row][col].setShowToUser(RED_MINE); // paint the clicked mine in red
         setGameStatus(GAME_STATUS_LOSE);
     }
@@ -195,22 +195,10 @@ public class Board implements Finals {
         return size * size / BOARD_MINES_RATIO;
     }
 
-    public int getNumOfDiscoveredTiles() {
-        int counter = 0;
-        for (int i = 0; i < size; i++)
-            for (int j = 0; j < size; j++)
-                counter = grid[i][j].isDiscovered() ? counter + 1 : counter;
-
-        return counter;
-    }
-
     public void coverARandomTile() {
         Tile currentTile;
-        if ((currentTile = getNextEmptyTile()) == null)
-            return;
-        else {
+        if ((currentTile = getNextEmptyTile()) != null) {
             currentTile.setCoverd();
-            currentTile.setShowToUser(EMPTY);
         }
     }
 
@@ -230,8 +218,8 @@ public class Board implements Finals {
 
     //insert a Mine in a tile after x seconds since a phone's position was changed
     public void insertAMineOnPunishMode() {
-        Tile currentTile;
-        if ((currentTile = getNextTileToInsertAMine()) != null) {
+        Tile currentTile = getNextTileToInsertAMine();
+        if (currentTile != null) {
             currentTile.setMine();
             numOfFlags++;
             numOfMines++;
@@ -243,19 +231,10 @@ public class Board implements Finals {
     public Tile getNextTileToInsertAMine() {
         Random rand = new Random();
         int row, col;
-//        do {
-//            row = rand.nextInt(size);
-//            col = rand.nextInt(size);
-//        } while (grid[row][col].isDiscovered() || grid[row][col].hasMine());
-        row = rand.nextInt(size);
-        col = rand.nextInt(size);
-        Tile currentTile = grid[row][col];
-        while (currentTile.hasMine() || currentTile.isDiscovered()) {
+        do {
             row = rand.nextInt(size);
             col = rand.nextInt(size);
-            currentTile = grid[row][col];
-        }
-        Log.d("Results ", "" + row + " " + col);
+        } while (grid[row][col].isDiscovered() || grid[row][col].hasMine());
         return grid[row][col];
     }
 
@@ -272,5 +251,11 @@ public class Board implements Finals {
         // We called it "hasLost" and not "isTheBoardFullOfMines" because maybe other changes in the future will also be
         // considered as if the user has lost
         return numOfMines == getBoardSize();
+    }
+
+    public void finishGame() {
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++)
+                grid[i][j].setShowToUser(MINE);
     }
 }

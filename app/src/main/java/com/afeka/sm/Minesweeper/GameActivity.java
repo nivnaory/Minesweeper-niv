@@ -1,5 +1,6 @@
 package com.afeka.sm.Minesweeper;
 
+import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.ServiceConnection;
@@ -104,13 +105,17 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
                     timeSoFar = 0;
                     runTimer();
                 }
-                String result = game.playTile(position);
-                if (!result.equals(GAME_STATUS_PLAY)) // Which means the user has won or lost
-                    initiateGameOverActivity(result);
-                updateNumOfFlagsView(game.getBoard().getNumberOfFlags());
-                tileAdapter.notifyDataSetChanged();
+                playMove(position);
             }
         });
+    }
+
+    private void playMove(int position) {
+        String result = game.playTile(position);
+        if (!result.equals(GAME_STATUS_PLAY)) // Which means the user has won or lost
+            initiateGameOverActivity(result);
+        updateNumOfFlagsView(game.getBoard().getNumberOfFlags());
+        tileAdapter.notifyDataSetChanged();
     }
 
     private void handleLongClick() { // put\remove a flag
@@ -141,9 +146,6 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
                 public void run() {
                     currentTime = (int) ((System.currentTimeMillis() - firstClickTime) / 1000 + timeSoFar);
                     timerView.setText(String.format("Timer:\n  %03d", currentTime));
-//                    if (currentTime % COVER_A_TILE_THRESHOLD == 0) {
-//                        handlePunishSensor(currentTime);
-//                    }
                 }
             });
         }
@@ -228,21 +230,19 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
 
     @Override
     public void alarmStateChanged(ALARM_STATE state, int timeSinceLastPositionChanged) {
-//        Log.d("ALARM! ", "" + state + " " + timeSinceLastPositionChanged);
-//        Log.d("Num of Mines: ", "" + game.getBoard().getNumOfMines());
         if (currentTime > 0)
             handlePunishUser(state, timeSinceLastPositionChanged);
     }
 
 
     void handlePunishUser(ALARM_STATE state, int currentTime) {
-        if (state == ALARM_STATE.NOT_ON_POSITION && game.getBoard().getNumOfDiscoveredTiles() > 0) {
-            //TODO: if all the board is full of mines, the user loses
+        if (state == ALARM_STATE.NOT_ON_POSITION) {
             if (currentTime % INSERT_A_MINE_THRESHOLD == 0) {
                 game.insertARandomMine();
                 handleNumOfFlagsView();
-            } else if (currentTime % COVER_A_TILE_THRESHOLD == 0)  // Just cover a Tile
+            } else {
                 game.coverARandomTile();
+            }
 
         }
         runOnUiThread(new Runnable() {
@@ -252,6 +252,6 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
             }
         });
         if (game.getBoard().hasLost())
-            game.getBoard().gameOverAndShowMines(0, 0);
+            game.getBoard().finishGame();
     }
 }
