@@ -8,11 +8,13 @@ public class Board implements Finals {
     private int size;
     private int level;
     private String gameStatus;
+    private int numOfMines;
 
     public Board(int level) {
         this.level = level;
         size = 0;
         numOfFlags = 0;
+        numOfMines = size * size / BOARD_MINES_RATIO;
         gameStatus = GAME_STATUS_PLAY;
         this.grid = initiateBoard();
     }
@@ -87,11 +89,11 @@ public class Board implements Finals {
             else  // a mine was clicked
                 gameOverAndShowMines(row, col);
         }
-        hasWin();
+        hasWon();
         return gameStatus;
     }
 
-    private void hasWin() {
+    private void hasWon() {
         int numOfDiscoveredTiles = 0;
         for (int row = 0; row < size; row++)
             for (int col = 0; col < size; col++) {
@@ -147,10 +149,10 @@ public class Board implements Finals {
         Tile currentTile = this.grid[row][col];
         if (!currentTile.isDiscovered()) {
             boolean wasFlagPlaced = currentTile.handleFlag();
-            numOfFlags = wasFlagPlaced == true ? numOfFlags - 1 : numOfFlags + 1;
+            numOfFlags = wasFlagPlaced ? numOfFlags - 1 : numOfFlags + 1;
             if (numOfFlags < 0) {
                 wasFlagPlaced = currentTile.handleFlag();
-                numOfFlags = wasFlagPlaced == true ? numOfFlags - 1 : numOfFlags + 1;
+                numOfFlags = wasFlagPlaced ? numOfFlags - 1 : numOfFlags + 1;
             }
         }
     }
@@ -189,5 +191,55 @@ public class Board implements Finals {
 
     public int getNumOfMines() {
         return size * size / BOARD_MINES_RATIO;
+    }
+
+    public int getNumOfDiscoveredTiles() {
+        int counter = 0;
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++)
+                counter = grid[i][j].isDiscovered() ? counter + 1 : counter;
+
+        return counter;
+    }
+
+    public void coverARandomTile() {
+        Random rand = new Random();
+        int row, col;
+        do {
+            row = rand.nextInt(size);
+            col = rand.nextInt(size);
+        } while (!grid[row][col].isDiscovered());
+        grid[row][col].setCoverd();
+        grid[row][col].setShowToUser(EMPTY);
+    }
+
+    //insert a Mine in a tile after x seconds since a phone's position was changed
+    public void insertAMineOnPunishMode() {
+        Random rand = new Random();
+        int row, col;
+        do {
+            row = rand.nextInt(size);
+            col = rand.nextInt(size);
+        } while (grid[row][col].isDiscovered() && !grid[row][col].hasMine());
+        grid[row][col].setMine();
+        numOfFlags++;
+        numOfMines++;
+        setTilesStatus(grid);
+        updateTilesShowToUser(grid);
+    }
+
+    public void updateTilesShowToUser(Tile[][] gridToUpdate) {
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++) {
+                Tile currentTile = gridToUpdate[i][j];
+                if (Character.isDigit(currentTile.getStatus()) && currentTile.isDiscovered())
+                    currentTile.setShowToUser(currentTile.getStatus());
+            }
+    }
+
+    public boolean hasLost(){ // In this method we check if the whole board is full of bombs => the user has lost.
+        // We called it "hasLost" and not "isTheBoardFullOfMines" because maybe other changes in the future will also be
+        // considered as if the user has lost
+          return numOfMines == getBoardSize();
     }
 }

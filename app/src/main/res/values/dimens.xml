@@ -36,6 +36,6 @@
     <dimen name="GridLayoutWeight">8</dimen>
 
     <!--    Text Properties-->
-    <dimen name="TextSize">30sp</dimen>
+    <dimen name="TextSize">20sp</dimen>
 
 </resources>

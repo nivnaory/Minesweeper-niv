@@ -7,6 +7,8 @@
     <color name="BackgroundColor"> #009688</color>
     <color name="discoveredTile"> #A9A9A9</color>
     <color name="undiscoveredTile"> #483D8B</color>
+    <color name="alarmedDiscoveredTile"> #6200EE</color>
+    <color name="alarmedUndiscoveredTile"> #E82020</color>
     <color name="ExitButtonColor"> #E82020</color>
     <color name="StartNewGameButtonColor"> #54D866</color>
 </resources>

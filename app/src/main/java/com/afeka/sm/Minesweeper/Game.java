@@ -18,4 +18,13 @@ public class Game {
     public Board getBoard() {
         return board;
     }
+
+    public void coverARandomTile() {
+        board.coverARandomTile();
+    }
+
+    public void insertARandomMine() {
+        board.insertAMineOnPunishMode();
+    }
+
 }

@@ -3,8 +3,8 @@ package com.afeka.sm.Minesweeper;
 import android.graphics.Color;
 
 import com.example.mineswipper.R;
- 
-public class Tile implements Finals{
+
+public class Tile implements Finals {
     private boolean isDiscovered;
     private boolean hasFlag;
     private boolean hasMine;
@@ -61,6 +61,13 @@ public class Tile implements Finals{
             this.showToUser = showToUser;
         else //isDiscovered = true
             this.showToUser = status;
+    }
+
+    public void setCoverd() {
+        if (isDiscovered) {
+            this.isDiscovered = false;
+            setShowToUser(EMPTY);
+        }
     }
 
     public char getStatus() {

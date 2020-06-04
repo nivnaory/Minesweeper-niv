@@ -57,10 +57,15 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
     }
 
     private void handleNumOfFlagsView() {
-        numOfFlagsView = findViewById(R.id.NumOfFlags);
-        String numOfFlags = Integer.toString(game.getBoard().getNumberOfFlags());
-        String numOfFlagsLabel = getResources().getString(R.string.NumOfFlags);
-        numOfFlagsView.setText(String.format("%s %s", numOfFlagsLabel, numOfFlags));
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                numOfFlagsView = findViewById(R.id.NumOfFlags);
+                String numOfFlags = Integer.toString(game.getBoard().getNumberOfFlags());
+                String numOfFlagsLabel = getResources().getString(R.string.NumOfFlags);
+                numOfFlagsView.setText(String.format("%s %s", numOfFlagsLabel, numOfFlags));
+            }
+        });
     }
 
     private void handleLevelView(int level) {
@@ -136,6 +141,9 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
                 public void run() {
                     currentTime = (int) ((System.currentTimeMillis() - firstClickTime) / 1000 + timeSoFar);
                     timerView.setText(String.format("Timer:\n  %03d", currentTime));
+//                    if (currentTime % COVER_A_TILE_THRESHOLD == 0) {
+//                        handlePunishSensor(currentTime);
+//                    }
                 }
             });
         }
@@ -221,5 +229,29 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
     @Override
     public void alarmStateChanged(ALARM_STATE state, int timeSinceLastPositionChanged) {
         Log.d("ALARM! ", "" + state + " " + timeSinceLastPositionChanged);
+        Log.d("Num of Mines: ", "" + game.getBoard().getNumOfMines());
+        if (currentTime > 0)
+            handlePunishUser(state, timeSinceLastPositionChanged);
+    }
+
+
+    void handlePunishUser(ALARM_STATE state, int currentTime) {
+        if (state == ALARM_STATE.NOT_ON_POSITION && game.getBoard().getNumOfDiscoveredTiles() > 0) {
+            //TODO: if all the board is full of mines, the user loses
+            if (currentTime % INSERT_A_MINE_THRESHOLD == 0) {
+                game.insertARandomMine();
+                handleNumOfFlagsView();
+            } else if (currentTime % COVER_A_TILE_THRESHOLD == 0)  // Just cover a Tile
+                game.coverARandomTile();
+
+        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tileAdapter.notifyDataSetChanged();
+            }
+        });
+        if (game.getBoard().hasLost())
+            game.getBoard().gameOverAndShowMines(0, 0);
     }
 }
