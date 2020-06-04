@@ -1,5 +1,7 @@
 package com.afeka.sm.Minesweeper;
 
+import android.util.Log;
+
 import java.util.Random;
 
 public class Board implements Finals {
@@ -31,10 +33,10 @@ public class Board implements Finals {
     }
 
     private void setMinesOnBoard(Tile[][] board) {
-        int numOfMines = this.numOfFlags = size * size / BOARD_MINES_RATIO;
+        numOfMines = this.numOfFlags = size * size / BOARD_MINES_RATIO;
         Random rand = new Random();
         for (int i = 0; i < numOfMines; i++) {
-            boolean wasMinePlaced = false;
+            boolean wasMinePlaced;
             do {
                 int row = rand.nextInt(size);
                 int col = rand.nextInt(size);
@@ -44,7 +46,7 @@ public class Board implements Finals {
     }
 
     private void setTilesStatus(Tile[][] board) {
-        int numOfAdjacentMines = 0;
+        int numOfAdjacentMines;
         for (int row = 0; row < size; row++)
             for (int col = 0; col < size; col++)
                 if (!board[row][col].hasMine()) {
@@ -203,29 +205,58 @@ public class Board implements Finals {
     }
 
     public void coverARandomTile() {
+        Tile currentTile;
+        if ((currentTile = getNextEmptyTile()) == null)
+            return;
+        else {
+            currentTile.setCoverd();
+            currentTile.setShowToUser(EMPTY);
+        }
+    }
+
+    private Tile getNextEmptyTile() {
+        int counter = 0; // We made counter in case there is no empty tile
         Random rand = new Random();
         int row, col;
         do {
             row = rand.nextInt(size);
             col = rand.nextInt(size);
-        } while (!grid[row][col].isDiscovered());
-        grid[row][col].setCoverd();
-        grid[row][col].setShowToUser(EMPTY);
+            counter++;
+        } while (!grid[row][col].isDiscovered() && counter < 100000);
+        if (counter >= 10000)
+            return null;
+        return grid[row][col];
     }
 
     //insert a Mine in a tile after x seconds since a phone's position was changed
     public void insertAMineOnPunishMode() {
+        Tile currentTile;
+        if ((currentTile = getNextTileToInsertAMine()) != null) {
+            currentTile.setMine();
+            numOfFlags++;
+            numOfMines++;
+            setTilesStatus(grid);
+            updateTilesShowToUser(grid);
+        }
+    }
+
+    public Tile getNextTileToInsertAMine() {
         Random rand = new Random();
         int row, col;
-        do {
+//        do {
+//            row = rand.nextInt(size);
+//            col = rand.nextInt(size);
+//        } while (grid[row][col].isDiscovered() || grid[row][col].hasMine());
+        row = rand.nextInt(size);
+        col = rand.nextInt(size);
+        Tile currentTile = grid[row][col];
+        while (currentTile.hasMine() || currentTile.isDiscovered()) {
             row = rand.nextInt(size);
             col = rand.nextInt(size);
-        } while (grid[row][col].isDiscovered() && !grid[row][col].hasMine());
-        grid[row][col].setMine();
-        numOfFlags++;
-        numOfMines++;
-        setTilesStatus(grid);
-        updateTilesShowToUser(grid);
+            currentTile = grid[row][col];
+        }
+        Log.d("Results ", "" + row + " " + col);
+        return grid[row][col];
     }
 
     public void updateTilesShowToUser(Tile[][] gridToUpdate) {
@@ -237,9 +268,9 @@ public class Board implements Finals {
             }
     }
 
-    public boolean hasLost(){ // In this method we check if the whole board is full of bombs => the user has lost.
+    public boolean hasLost() { // In this method we check if the whole board is full of bombs => the user has lost.
         // We called it "hasLost" and not "isTheBoardFullOfMines" because maybe other changes in the future will also be
         // considered as if the user has lost
-          return numOfMines == getBoardSize();
+        return numOfMines == getBoardSize();
     }
 }

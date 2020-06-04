@@ -11,8 +11,7 @@ public class Game {
     public String playTile(int position) {
         int col = position % board.getSize();
         int row = position / board.getSize();
-        String status = board.discoverTile(row, col);
-        return status;
+        return board.discoverTile(row, col);
     }
 
     public Board getBoard() {

@@ -228,8 +228,8 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
 
     @Override
     public void alarmStateChanged(ALARM_STATE state, int timeSinceLastPositionChanged) {
-        Log.d("ALARM! ", "" + state + " " + timeSinceLastPositionChanged);
-        Log.d("Num of Mines: ", "" + game.getBoard().getNumOfMines());
+//        Log.d("ALARM! ", "" + state + " " + timeSinceLastPositionChanged);
+//        Log.d("Num of Mines: ", "" + game.getBoard().getNumOfMines());
         if (currentTime > 0)
             handlePunishUser(state, timeSinceLastPositionChanged);
     }
