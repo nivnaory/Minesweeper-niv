@@ -28,8 +28,8 @@ public interface Finals {
 
     int SENSORS_THRESHOLD = 1;
 
-    int COVER_A_TILE_THRESHOLD = 1;
-    int INSERT_A_MINE_THRESHOLD = 2;
+    int COVER_A_TILE_THRESHOLD = 5;
+    int INSERT_A_MINE_THRESHOLD = 10;
 
     String LEVEL_ACTIVITY_KEY = "level Activity";
     String GAME_RESULT = "GameResult";
