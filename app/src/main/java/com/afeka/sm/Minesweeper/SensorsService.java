@@ -103,7 +103,6 @@ public class SensorsService extends Service implements SensorEventListener, Fina
 
         if (previousState != currentAlarmState) {
             handleTimer(currentAlarmState);
-//            mListener.alarmStateChanged(currentAlarmState, 0);
         }
     }
 

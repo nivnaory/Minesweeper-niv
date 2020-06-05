@@ -19,10 +19,8 @@ public class AnimationFragment extends Fragment implements Finals {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.animation_fragment, container, false);
-        return view;
+        return inflater.inflate(R.layout.animation_fragment, container, false);
     }
-
 
     @Override
     public void onStart() {

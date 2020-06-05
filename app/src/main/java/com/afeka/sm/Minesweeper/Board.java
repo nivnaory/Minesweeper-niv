@@ -197,9 +197,8 @@ public class Board implements Finals {
 
     public void coverARandomTile() {
         Tile currentTile;
-        if ((currentTile = getNextEmptyTile()) != null) {
+        if ((currentTile = getNextEmptyTile()) != null)
             currentTile.setCoverd();
-        }
     }
 
     private Tile getNextEmptyTile() {
@@ -211,7 +210,7 @@ public class Board implements Finals {
             col = rand.nextInt(size);
             counter++;
         } while (!grid[row][col].isDiscovered() && counter < 100000);
-        if (counter >= 10000)
+        if (counter >= 100000)
             return null;
         return grid[row][col];
     }

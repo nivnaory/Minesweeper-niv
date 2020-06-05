@@ -240,9 +240,8 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
             if (currentTime % INSERT_A_MINE_THRESHOLD == 0) {
                 game.insertARandomMine();
                 handleNumOfFlagsView();
-            } else {
+            } else
                 game.coverARandomTile();
-            }
 
         }
         runOnUiThread(new Runnable() {
