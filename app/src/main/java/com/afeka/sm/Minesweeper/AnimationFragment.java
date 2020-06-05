@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.example.mineswipper.R;
 
 public class AnimationFragment extends Fragment implements Finals {
     boolean win = true;
-    View view;
 
     public AnimationFragment() {
     }
