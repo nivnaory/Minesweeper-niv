@@ -6,17 +6,13 @@
     android:background="#FFFAFA"
     tools:context="com.afeka.sm.Minesweeper.DifficultyChooserActivity">
 
-<ScrollView
-    android:layout_width="wrap_content"
-    android:layout_height="180dp">
-    <FrameLayout
+<FrameLayout
     android:layout_width="400dp"
-    android:layout_height="200dp"
+    android:layout_height="100dp"
     android:layout_weight="0.5"
     android:id="@+id/Fhighlight"
     android:animateLayoutChanges="true">
-  </FrameLayout>
-</ScrollView>
+       </FrameLayout>
 
     <Button
         android:id="@+id/Easy"

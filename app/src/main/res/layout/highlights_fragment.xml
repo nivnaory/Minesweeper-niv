@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/Fhighlight"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.afeka.sm.Minesweeper.HighlightsFragment">
 
-
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:padding="2dp">
-
+        android:layout_width="400dp"
+        android:layout_height="match_parent">
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -47,9 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:padding="15dip"
-                android:text="Omer" />
-
+                android:padding="15dip"/>
             <TextView
                 android:id="@+id/EasyFirstPlaceTime"
                 android:layout_width="0dp"
@@ -68,8 +67,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:padding="15dip"
-                android:text="niv" />
+                android:padding="15dip" />
 
             <TextView
                 android:id="@+id/EasySecondPlaceTime"
@@ -103,14 +101,113 @@
     </TableLayout>
 
 
+
+
+
+
+
+
+
+        <!--Meduim Level Table -->
+        <TableLayout
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:padding="1dp">
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/LevelMediumLabel"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="15dip"
+                    android:text="@string/MediumLevel"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <TextView
+                    android:id="@+id/TimeMediumLabel"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="15dip"
+                    android:text="@string/Time"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/MediumFirstPlaceName"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="15dip"
+                    android:text="Omer" />
+
+                <TextView
+                    android:id="@+id/MediumFirstPlaceTime"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="15dip"
+                    android:text="100" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/MediumSecondPlaceName"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="15dip"
+                    android:text="niv" />
+
+                <TextView
+                    android:id="@+id/MediumSecondPlaceTime"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="15dip"
+                    android:text="150" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/MediumThirdPlaceName"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="15dip"
+                    android:text="asaf" />
+
+                <TextView
+                    android:id="@+id/MediumThirdPlaceTime"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="15dip"
+                    android:text="200" />
+            </TableRow>
+        </TableLayout>
     <!--Hard LEVEL TABLE-->
     <TableLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
         android:layout_marginBottom="2dp"
         android:padding="1dp">
-
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -178,6 +275,8 @@
                 android:text="150" />
         </TableRow>
 
+
+
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -200,99 +299,5 @@
         </TableRow>
     </TableLayout>
 
-<!--Meduim Level Table -->
-    <TableLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="210dp"
-        android:padding="1dp">
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/LevelMediumLabel"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="@string/MediumLevel"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimaryDark" />
-
-            <TextView
-                android:id="@+id/TimeMediumLabel"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="@string/Time"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimary" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/MediumFirstPlaceName"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="Omer" />
-
-            <TextView
-                android:id="@+id/MediumFirstPlaceTime"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="100" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/MediumSecondPlaceName"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="niv" />
-
-            <TextView
-                android:id="@+id/MediumSecondPlaceTime"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="150" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/MediumThirdPlaceName"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="asaf" />
-
-            <TextView
-                android:id="@+id/MediumThirdPlaceTime"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="15dip"
-                android:text="200" />
-        </TableRow>
-    </TableLayout>
-</FrameLayout>
+    </LinearLayout>
+</ScrollView>

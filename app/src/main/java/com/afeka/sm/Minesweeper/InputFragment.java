@@ -27,8 +27,8 @@ public class InputFragment extends DialogFragment {
     public static InputFragment newInstance(String title) {
         InputFragment inputFragment = new InputFragment();
         return inputFragment;
-    }
 
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

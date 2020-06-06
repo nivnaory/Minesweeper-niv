@@ -1,14 +1,14 @@
 package com.afeka.sm.Minesweeper;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import com.example.mineswipper.R;
 
 import java.util.Objects;
@@ -18,29 +18,34 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
     int level;
     SharedPreferences sharedPref;
     boolean isShowed = true;
-    Fragment highlightsFragment;
+    DialogFragment  highlightsFragment;
+    Button higlightButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.difficulty_chooser_layout);
         sharedPref = DifficultyChooserActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
+       higlightButton=findViewById(R.id.Highlights);
+       higlightButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               StartHighlightsFragment();
+           }
+       });
 
-        StartHighlightsFragment();
 
         handleLastLevelMarking();
     }
 
+
     private void StartHighlightsFragment() {
-        highlightsFragment = new HighlightsFragment();
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.Fhighlight, highlightsFragment)
-                .commit();
-        getSupportFragmentManager().beginTransaction().hide(highlightsFragment).commit();
+        FragmentManager fm = getFragmentManager();
+        HighlightsFragment alertDialog = HighlightsFragment.newInstance(String.valueOf(R.string.Highlights));
+        alertDialog.show(fm,"");
+
     }
-
     private void handleLastLevelMarking() {
         int lastLevelThatWasChosen = sharedPref.getInt(String.valueOf(R.integer.LastChosenLevel), 0);
         boolean hasTheUserAlreadyChoseALevel = lastLevelThatWasChosen != INITIAL_VALUE_OF_CHOSEN_LEVEL_BY_THE_USER;

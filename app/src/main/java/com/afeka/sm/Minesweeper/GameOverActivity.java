@@ -164,7 +164,6 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
     }
 
     public void StartInputFragment() {
-        fragmentInput = new InputFragment();
         FragmentManager fm = getSupportFragmentManager();
         InputFragment alertDialog = InputFragment.newInstance(String.valueOf(R.string.CongratulationsMessage));
         alertDialog.show(fm, FRAGMENT_ALERT);
