@@ -34,17 +34,14 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
            }
        });
 
-
         handleLastLevelMarking();
     }
 
 
     private void StartHighlightsFragment() {
-
         FragmentManager fm = getFragmentManager();
         HighlightsFragment alertDialog = HighlightsFragment.newInstance(String.valueOf(R.string.Highlights));
         alertDialog.show(fm,"");
-
     }
     private void handleLastLevelMarking() {
         int lastLevelThatWasChosen = sharedPref.getInt(String.valueOf(R.integer.LastChosenLevel), 0);
@@ -67,14 +64,6 @@ public class DifficultyChooserActivity extends AppCompatActivity implements Fina
                 break;
         }
         button.setBackgroundResource(R.color.ChosenButtonColor);
-    }
-
-    public void showHighlights(View view) {
-        isShowed = !isShowed;
-        if (!isShowed)
-            getSupportFragmentManager().beginTransaction().show(highlightsFragment).commit();
-        else
-            getSupportFragmentManager().beginTransaction().hide(highlightsFragment).commit();
     }
 
     public void startGame(View view) {
