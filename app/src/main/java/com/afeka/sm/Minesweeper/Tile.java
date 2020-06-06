@@ -1,8 +1,5 @@
 package com.afeka.sm.Minesweeper;
 
-import android.graphics.Color;
-
-import com.example.mineswipper.R;
 
 public class Tile implements Finals {
     private boolean isDiscovered;
@@ -64,8 +61,8 @@ public class Tile implements Finals {
     }
 
     public void setCoverd() {
-            this.isDiscovered = false;
-            setShowToUser(EMPTY);
+        this.isDiscovered = false;
+        setShowToUser(EMPTY);
     }
 
     public char getStatus() {

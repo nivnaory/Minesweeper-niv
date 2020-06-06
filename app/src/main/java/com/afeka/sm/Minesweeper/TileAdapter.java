@@ -10,7 +10,7 @@ import android.widget.GridView;
 import com.example.mineswipper.R;
 
 
-public class TileAdapter extends BaseAdapter implements Finals{
+public class TileAdapter extends BaseAdapter implements Finals {
     private Board board;
     private Context context;
 
@@ -68,7 +68,7 @@ public class TileAdapter extends BaseAdapter implements Finals{
         return tileView;
     }
 
-    private int setBackgroundColorByTileStatus(Tile tile) {
+    public int setBackgroundColorByTileStatus(Tile tile) {
         if (tile.isDiscovered())
             return context.getResources().getColor(R.color.discoveredTile);
         else

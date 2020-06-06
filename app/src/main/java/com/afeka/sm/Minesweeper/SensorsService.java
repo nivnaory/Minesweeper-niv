@@ -130,13 +130,11 @@ public class SensorsService extends Service implements SensorEventListener, Fina
                 @Override
                 public void run() {
                     timeSinceLastPositionChanged = (int) ((System.currentTimeMillis() - firstClickTime) / 1000);
-                    if (timeSinceLastPositionChanged % COVER_A_TILE_THRESHOLD == 0) {
-                        if (timeSinceLastPositionChanged >= INSERT_A_MINE_THRESHOLD && currentAlarmState == SensorServiceListener.ALARM_STATE.NOT_ON_POSITION) {
-                            mListener.alarmStateChanged(currentAlarmState, timeSinceLastPositionChanged);
-                            timeSinceLastPositionChanged %= INSERT_A_MINE_THRESHOLD;
-                        } else if (timeSinceLastPositionChanged >= COVER_A_TILE_THRESHOLD && currentAlarmState == SensorServiceListener.ALARM_STATE.NOT_ON_POSITION)
-                            mListener.alarmStateChanged(currentAlarmState, timeSinceLastPositionChanged);
-                    }
+                    mListener.alarmStateChanged(currentAlarmState, timeSinceLastPositionChanged);
+                    if (timeSinceLastPositionChanged >= INSERT_A_MINE_THRESHOLD)
+                        timeSinceLastPositionChanged %= INSERT_A_MINE_THRESHOLD;
+                    if (currentAlarmState == SensorServiceListener.ALARM_STATE.ON_POSITION)
+                        myTimerTask.cancel();
                 }
             }).start();
         }
