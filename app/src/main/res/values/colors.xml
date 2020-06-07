@@ -10,4 +10,5 @@
     <color name="alarmedGridBackground"> #E82020</color>
     <color name="ExitButtonColor"> #E82020</color>
     <color name="StartNewGameButtonColor"> #54D866</color>
+    <color name="Highlight"> #5F9EA0</color>
 </resources>

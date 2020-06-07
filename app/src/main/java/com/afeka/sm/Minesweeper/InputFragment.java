@@ -34,6 +34,7 @@ public class InputFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setMessage(R.string.PleaseEnterYourName);
+        alertDialogBuilder.setTitle(R.string.CongratulationsMessage);
         editText = new EditText(this.getActivity());
         alertDialogBuilder.setView(editText);
         //alertDialogBuilder.setIcon(R.drawable.winner);

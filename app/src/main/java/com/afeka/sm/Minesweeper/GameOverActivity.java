@@ -1,5 +1,6 @@
 package com.afeka.sm.Minesweeper;
 
+import android.media.MediaPlayer;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +28,7 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
     int timePassed;
     int level;
     String userName;
-    Fragment fragmentInput;
+     MediaPlayer sound;
     Fragment fragmentAnimation;
     boolean hasTheUserBrokenARecord;
 
@@ -36,10 +37,12 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
         setContentView(R.layout.game_over_layout);
         Intent activity = getIntent();
         sharedPref = GameOverActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
-
+        Context context=this;
         TextResult = findViewById(R.id.GameResult);
         win = Objects.requireNonNull(activity.getExtras()).getBoolean(GAME_RESULT);
         if (win) {
+            sound=MediaPlayer.create(context,R.raw.victory);
+            sound.start();
             level = activity.getExtras().getInt(LEVEL_ACTIVITY_KEY);
             timePassed = activity.getExtras().getInt(TIME_PASSED);
             boolean hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
@@ -47,9 +50,10 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
                 StartInputFragment();
 
             TextResult.setText(R.string.Win);
-        } else
+        } else{
             TextResult.setText(R.string.Lose);
-
+            sound=MediaPlayer.create(context,R.raw.bomb);
+            sound.start();
         StartAnimationFragment();
         Button exitButton = findViewById(R.id.ExitButton);
         exitButton.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +63,8 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
                 finish();
             }
         });
+        }
+
     }
 
 

@@ -7,10 +7,23 @@
     android:orientation="vertical"
     tools:context="com.afeka.sm.Minesweeper.HighlightsFragment">
 
+
+
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/Highlight">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Highlights"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:pointerIcon="all_scroll">
+
+        </TextView>
     <TableLayout
         android:layout_width="400dp"
         android:layout_height="match_parent">

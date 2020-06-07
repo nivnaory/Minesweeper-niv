@@ -35,8 +35,8 @@ public class HighlightsFragment extends DialogFragment implements Finals {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         content = inflater.inflate(R.layout.highlights_fragment, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        alertDialogBuilder.setMessage(R.string.Highlights);
         alertDialogBuilder.setView(content);
+        alertDialogBuilder.setIcon(R.drawable.recordsicon);
         alertDialogBuilder.create();
         return alertDialogBuilder.show();
     }

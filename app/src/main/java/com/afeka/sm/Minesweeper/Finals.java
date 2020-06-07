@@ -26,7 +26,7 @@ public interface Finals {
 
     int NUM_OF_RECORDS_TO_SAVE = 3;
 
-    int SENSORS_THRESHOLD = 1;
+    int SENSORS_THRESHOLD = 6;
 
     int COVER_A_TILE_THRESHOLD = 5;
     int INSERT_A_MINE_THRESHOLD = 10;
