@@ -1,19 +1,12 @@
 package com.afeka.sm.Minesweeper;
 
-import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.SoundPool;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.content.Intent;
@@ -47,10 +40,9 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
 
-        Intent activityCalled = getIntent();
         isFirstTime = true;
         sharedPref = GameActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
-        level = Objects.requireNonNull(activityCalled.getExtras()).getInt(LEVEL_ACTIVITY_KEY);
+        level = Objects.requireNonNull(getIntent().getExtras()).getInt(LEVEL_ACTIVITY_KEY);
         game = new Game(level);
         handleUpperLayout(level);
         handleGridView();
@@ -65,9 +57,9 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                numOfFlagsView = findViewById(R.id.NumOfFlags);
                 String numOfFlags = Integer.toString(game.getBoard().getNumberOfFlags());
                 String numOfFlagsLabel = getResources().getString(R.string.NumOfFlags);
+                numOfFlagsView = findViewById(R.id.NumOfFlags);
                 numOfFlagsView.setText(String.format("%s %s", numOfFlagsLabel, numOfFlags));
             }
         });
@@ -94,9 +86,7 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
         tileAdapter = new TileAdapter(this, game.getBoard());
         gridView.setAdapter(tileAdapter);
         gridView.setNumColumns(game.getBoard().getSize());
-
         handleShortClick();
-
         handleLongClick();
     }
 
@@ -231,12 +221,13 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
         super.onDestroy();
     }
 
-
     @Override
     public void alarmStateChanged(ALARM_STATE state, int timeSinceLastPositionChanged) {
-        if (state == ALARM_STATE.ON_POSITION) {  // which means the user reverted the phone to initial position
+        if (!game.getBoard().getGameStatus().equals(GAME_STATUS_PLAY))
+            return;
+        if (state == ALARM_STATE.ON_POSITION) // which means the user reverted the phone to initial position
             setGridViewBackgroundColor(gridView, R.color.BackgroundColor);
-        } else { // NOT_ON_POSITION
+        else { // NOT_ON_POSITION
             setGridViewBackgroundColor(gridView, R.color.alarmedGridBackground);
             if (currentTime % INSERT_A_MINE_THRESHOLD == 0) { // 10, 20, 30, ...
                 game.insertARandomMine();

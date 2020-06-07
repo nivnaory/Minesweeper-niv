@@ -18,8 +18,8 @@ public class TileView extends LinearLayout {
     }
 
     private void generateTextViews(Context context) {
-        mTextView = new TextView(context);
         LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        mTextView = new TextView(context);
         mTextView.setLayoutParams(layoutParams);
         mTextView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
         mTextView.setGravity(Gravity.CENTER);

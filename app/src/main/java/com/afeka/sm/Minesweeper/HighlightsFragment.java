@@ -26,8 +26,7 @@ public class HighlightsFragment extends DialogFragment implements Finals {
     }
 
     public static HighlightsFragment newInstance(String title) {
-        HighlightsFragment highlightsFragment = new HighlightsFragment();
-        return highlightsFragment;
+        return new HighlightsFragment();
     }
 
     @Override
@@ -36,7 +35,7 @@ public class HighlightsFragment extends DialogFragment implements Finals {
         content = inflater.inflate(R.layout.highlights_fragment, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setView(content);
-        alertDialogBuilder.setIcon(R.drawable.recordsicon);
+//        alertDialogBuilder.setIc on(R.drawable.recordsicon);
         alertDialogBuilder.create();
         return alertDialogBuilder.show();
     }
@@ -116,7 +115,6 @@ public class HighlightsFragment extends DialogFragment implements Finals {
     }
 
     public MineSweeperRecord[] getCurrentLevelRecords(int level) {
-
         MineSweeperRecord[] currentLevelRecords = createEmptyRecords();
         switch (level) {
             case EASY_LEVEL:
@@ -151,20 +149,18 @@ public class HighlightsFragment extends DialogFragment implements Finals {
 
     public MineSweeperRecord[] createEmptyRecords() {
         MineSweeperRecord[] currentLevelRecords = new MineSweeperRecord[NUM_OF_RECORDS_TO_SAVE];
-        for (int i = 0; i < NUM_OF_RECORDS_TO_SAVE; i++) {
+        for (int i = 0; i < NUM_OF_RECORDS_TO_SAVE; i++)
             currentLevelRecords[i] = new MineSweeperRecord();
-        }
         return currentLevelRecords;
     }
 
     public void initiateRecordsIfRequired() {
         SharedPreferences.Editor editor = sharedPref.edit();
-
         String isFirstTime = sharedPref.getString(String.valueOf(R.string.IsFirstTime), "True");
         if (isFirstTime.equals("True")) {
             editor.putString(String.valueOf(R.string.IsFirstTime), "False");
             editor.apply();
-
+            
             editor.putInt(String.valueOf(R.id.EasyFirstPlaceTime), INITIAL_RECORD_VALUE);
             editor.putInt(String.valueOf(R.id.EasySecondPlaceTime), INITIAL_RECORD_VALUE);
             editor.putInt(String.valueOf(R.id.EasyThirdPlaceTime), INITIAL_RECORD_VALUE);

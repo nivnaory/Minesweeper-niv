@@ -8,7 +8,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.mineswipper.R;
 
 
@@ -24,10 +23,8 @@ public class InputFragment extends DialogFragment {
     public InputFragment() {
     }
 
-    public static InputFragment newInstance(String title) {
-        InputFragment inputFragment = new InputFragment();
-        return inputFragment;
-
+    public static InputFragment newInstance() {
+        return new InputFragment();
     }
 
     @Override
@@ -43,7 +40,6 @@ public class InputFragment extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 //Pass the Name to GameOverActivity
                 dataPasser.onDataPass(editText.getText().toString());
-
                 toast.makeText(getActivity(),
                         R.string.SavedConfirmation, Toast.LENGTH_LONG)
                         .show();

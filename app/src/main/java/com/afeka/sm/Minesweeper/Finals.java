@@ -6,10 +6,6 @@ public interface Finals {
     char RED_MINE = 'R';
     char FLAG = 'F';
 
-    String GAME_STATUS_PLAY = "play";
-    String GAME_STATUS_WIN = "Win";
-    String GAME_STATUS_LOSE = "Lose";
-
     int EASY_LEVEL = 1;
     int MEDIUM_LEVEL = 2;
     int HARD_LEVEL = 3;
@@ -41,4 +37,8 @@ public interface Finals {
     String APP_CHOSEN_NAME = "myPreferencesFile";
 
     String FRAGMENT_ALERT = "fragment_alert";
+
+    String GAME_STATUS_PLAY = "play";
+    String GAME_STATUS_WIN = "Win";
+    String GAME_STATUS_LOSE = "Lose";
 }

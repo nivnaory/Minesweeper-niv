@@ -25,5 +25,4 @@ public class Game {
     public void insertARandomMine() {
         board.insertAMineOnPunishMode();
     }
-
 }

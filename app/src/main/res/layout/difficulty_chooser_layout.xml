@@ -6,59 +6,53 @@
     android:background="#FFFAFA"
     tools:context="com.afeka.sm.Minesweeper.DifficultyChooserActivity">
 
-<FrameLayout
-    android:layout_width="400dp"
-    android:layout_height="100dp"
-    android:layout_weight="0.5"
-    android:id="@+id/Fhighlight"
-    android:animateLayoutChanges="true">
-       </FrameLayout>
+    <FrameLayout
+        android:id="@+id/Fhighlight"
+        android:layout_width="@dimen/LayoutWidth"
+        android:layout_height="@dimen/TextViewsMarginTop"
+        android:animateLayoutChanges="true" />
 
     <Button
         android:id="@+id/Easy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginVertical="200dp"
+        android:layout_marginVertical="@dimen/MarginVertical"
+        android:layout_marginStart="@dimen/MarginStart"
         android:background="@color/ButtonColor"
         android:onClick="startGame"
-        android:text="@string/Easy"
-        />
+        android:text="@string/Easy" />
 
     <Button
         android:id="@+id/Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
         android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/MarginStart"
         android:background="@color/ButtonColor"
         android:onClick="startGame"
-        android:text="@string/Medium"
-         />
+        android:text="@string/Medium" />
 
     <Button
         android:id="@+id/Hard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginVertical="@dimen/MarginVertical"
+        android:layout_marginStart="@dimen/MarginStart"
         android:background="@color/ButtonColor"
         android:onClick="startGame"
-        android:text="@string/Hard"
-        />
+        android:text="@string/Hard" />
 
     <Button
         android:id="@+id/Highlights"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
         android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/MarginStart"
         android:background="@color/ButtonColor"
-        android:text="@string/Highlights"
-        />
+        android:text="@string/Highlights" />
 
 </RelativeLayout>

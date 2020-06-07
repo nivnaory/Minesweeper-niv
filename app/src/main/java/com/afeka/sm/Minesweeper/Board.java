@@ -1,7 +1,5 @@
 package com.afeka.sm.Minesweeper;
 
-import android.util.Log;
-
 import java.util.Random;
 
 public class Board implements Finals {
@@ -17,7 +15,7 @@ public class Board implements Finals {
         size = 0;
         numOfFlags = 0;
         numOfMines = size * size / BOARD_MINES_RATIO;
-        gameStatus = GAME_STATUS_PLAY;
+        gameStatus = String.valueOf(EMPTY);
         this.grid = initiateBoard();
     }
 
@@ -78,6 +76,7 @@ public class Board implements Finals {
     }
 
     public String discoverTile(int row, int col) {
+        gameStatus = GAME_STATUS_PLAY;
         Tile currentTile = this.grid[row][col];
         if (!currentTile.isDiscovered() && !currentTile.hasFlag()) {
             currentTile.setDiscovered();
@@ -198,7 +197,7 @@ public class Board implements Finals {
     public void coverARandomTile() {
         Tile currentTile;
         if ((currentTile = getNextEmptyTile()) != null)
-            currentTile.setCoverd();
+            currentTile.setCovered();
     }
 
     private Tile getNextEmptyTile() {
@@ -256,5 +255,9 @@ public class Board implements Finals {
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
                 grid[i][j].setShowToUser(MINE);
+    }
+
+    public String getGameStatus() {
+        return gameStatus;
     }
 }

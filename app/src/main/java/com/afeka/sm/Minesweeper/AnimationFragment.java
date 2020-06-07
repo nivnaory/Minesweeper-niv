@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.example.mineswipper.R;
 
 public class AnimationFragment extends Fragment implements Finals {
-    boolean win = true;
+    boolean hasWon = true;
 
     public AnimationFragment() {
     }
@@ -24,11 +24,11 @@ public class AnimationFragment extends Fragment implements Finals {
 
     @Override
     public void onStart() {
-        win = getArguments().getBoolean(GAME_RESULT);
+        hasWon = getArguments().getBoolean(GAME_RESULT);
         super.onStart();
 
-        ImageView ivLoader = (ImageView) getActivity().findViewById(R.id.gameOverAnimation);
-        int resource = win ? R.drawable.win : R.drawable.lose;
+        ImageView ivLoader = getActivity().findViewById(R.id.gameOverAnimation);
+        int resource = hasWon ? R.drawable.win : R.drawable.lose;
         ivLoader.setBackgroundResource(resource);
         AnimationDrawable frameAnimation = (AnimationDrawable) ivLoader.getBackground();
         frameAnimation.start();

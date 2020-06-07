@@ -60,7 +60,7 @@ public class Tile implements Finals {
             this.showToUser = status;
     }
 
-    public void setCoverd() {
+    public void setCovered() {
         this.isDiscovered = false;
         setShowToUser(EMPTY);
     }
@@ -84,5 +84,4 @@ public class Tile implements Finals {
     public boolean hasMine() {
         return hasMine;
     }
-
 }

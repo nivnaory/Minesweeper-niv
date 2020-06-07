@@ -57,7 +57,7 @@ public class TileAdapter extends BaseAdapter implements Finals {
             case MINE:
                 tileView.setBackgroundResource(R.drawable.mine);
                 break;
-            case RED_MINE: //which means Red - the mine which was clicked
+            case RED_MINE: // Red means - the mine which was clicked
                 tileView.setBackgroundResource(R.drawable.red_mine);
                 break;
             default: // Digit
@@ -87,7 +87,6 @@ public class TileAdapter extends BaseAdapter implements Finals {
 
     @Override
     public int getCount() {
-        int boardSize = board.getBoardSize();
-        return boardSize;
+        return board.getBoardSize();
     }
 }

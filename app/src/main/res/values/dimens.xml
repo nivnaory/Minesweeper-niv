@@ -20,8 +20,13 @@
     <dimen name="ButtonMarginTop">500dp</dimen>
     <dimen name="MarginHorizontal">0dp</dimen>
     <dimen name="MarginVertical">200dp</dimen>
+    <dimen name="MarginStart">50dp</dimen>
 
     <!--    Linear Layout Properties-->
+    <dimen name="LayoutWidth">400dp</dimen>
+
+
+    <!--    Frame Layout Properties-->
     <dimen name="HorizontalLinearLayoutHeight">125dp</dimen>
 
     <!--    Text Views Properties-->

@@ -100,10 +100,8 @@ public class SensorsService extends Service implements SensorEventListener, Fina
         else
             this.currentAlarmState = SensorServiceListener.ALARM_STATE.ON_POSITION;
 
-
-        if (previousState != currentAlarmState) {
+        if (previousState != currentAlarmState)
             handleTimer(currentAlarmState);
-        }
     }
 
     private void handleTimer(SensorServiceListener.ALARM_STATE currentAlarmState) {

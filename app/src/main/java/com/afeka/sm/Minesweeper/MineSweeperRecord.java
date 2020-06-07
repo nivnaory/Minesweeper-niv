@@ -1,11 +1,10 @@
 package com.afeka.sm.Minesweeper;
 
 public class MineSweeperRecord implements Finals {
-    String name = "";
+    String name = String.valueOf(EMPTY);
     int time = INITIAL_RECORD_VALUE;
 
     public MineSweeperRecord() {
-
     }
 
     public MineSweeperRecord(String name, int time) {

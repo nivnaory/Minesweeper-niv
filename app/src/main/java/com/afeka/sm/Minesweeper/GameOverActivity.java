@@ -6,14 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.mineswipper.R;
@@ -28,65 +24,55 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
     int timePassed;
     int level;
     String userName;
-     MediaPlayer sound;
+    MediaPlayer sound;
     Fragment fragmentAnimation;
-    boolean hasTheUserBrokenARecord;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_over_layout);
+        int soundToPlay;
         Intent activity = getIntent();
         sharedPref = GameOverActivity.this.getSharedPreferences(APP_CHOSEN_NAME, Context.MODE_PRIVATE);
-        Context context=this;
         TextResult = findViewById(R.id.GameResult);
         win = Objects.requireNonNull(activity.getExtras()).getBoolean(GAME_RESULT);
         if (win) {
-            sound=MediaPlayer.create(context,R.raw.victory);
-            sound.start();
+            soundToPlay = R.raw.victory;
+            TextResult.setText(R.string.Win);
             level = activity.getExtras().getInt(LEVEL_ACTIVITY_KEY);
             timePassed = activity.getExtras().getInt(TIME_PASSED);
-            boolean hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
-            if (hasTheUserBrokenARecord)
+            if (hasTheUserBrokenARecord(level, timePassed))
                 StartInputFragment();
-
-            TextResult.setText(R.string.Win);
-        } else{
+        } else { // lose
+            soundToPlay = R.raw.bomb;
             TextResult.setText(R.string.Lose);
-            sound=MediaPlayer.create(context,R.raw.bomb);
-            sound.start();
-        StartAnimationFragment();
-        Button exitButton = findViewById(R.id.ExitButton);
-        exitButton.setOnClickListener(new View.OnClickListener() {
+            Button exitButton = findViewById(R.id.ExitButton);
+            exitButton.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
         }
-
+        StartAnimationFragment();
+        sound = MediaPlayer.create(this, soundToPlay);
+        sound.start();
     }
 
 
     public void StartNewGame(View view) {
-        hasTheUserBrokenARecord = hasTheUserBrokenARecord(level, timePassed);
-        Intent intent = new Intent(this, DifficultyChooserActivity.class);
-        if (hasTheUserBrokenARecord) {
-            MineSweeperRecord newRecord = new MineSweeperRecord(userName, timePassed);
-            updateRecords(newRecord, level);
-        }
-        this.startActivity(intent);
+        if (hasTheUserBrokenARecord(level, timePassed))
+            updateRecords(new MineSweeperRecord(userName, timePassed), level);
+        startActivity(new Intent(this, DifficultyChooserActivity.class));
     }
 
     private void updateRecords(MineSweeperRecord newRecord, int level) {
         MineSweeperRecord[] currentLevelRecords = getCurrentLevelRecords(level);
         if (newRecord.getTime() < currentLevelRecords[0].getTime()) { // if first place - move all the elements one index away from the first place
-            for (int i = NUM_OF_RECORDS_TO_SAVE - 1; i > 0; i--)
-                currentLevelRecords[i] = currentLevelRecords[i - 1];
+            System.arraycopy(currentLevelRecords, 0, currentLevelRecords, 1, NUM_OF_RECORDS_TO_SAVE - 1);
             currentLevelRecords[0] = newRecord;
         } else if (newRecord.getTime() < currentLevelRecords[1].getTime()) { // same for second place
-            for (int i = NUM_OF_RECORDS_TO_SAVE - 1; i > 1; i--)
-                currentLevelRecords[i] = currentLevelRecords[i - 1];
+            System.arraycopy(currentLevelRecords, 1, currentLevelRecords, 2, NUM_OF_RECORDS_TO_SAVE - 2);
             currentLevelRecords[1] = newRecord;
         } else
             currentLevelRecords[2] = newRecord;
@@ -170,9 +156,8 @@ public class GameOverActivity extends AppCompatActivity implements Finals, Input
     }
 
     public void StartInputFragment() {
-        FragmentManager fm = getSupportFragmentManager();
-        InputFragment alertDialog = InputFragment.newInstance(String.valueOf(R.string.CongratulationsMessage));
-        alertDialog.show(fm, FRAGMENT_ALERT);
+        InputFragment alertDialog = InputFragment.newInstance();
+        alertDialog.show(getSupportFragmentManager(), FRAGMENT_ALERT);
     }
 
     public void StartAnimationFragment() {
