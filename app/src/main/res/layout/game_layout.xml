@@ -51,6 +51,17 @@
             android:layout_weight="@dimen/GridLayoutWeight"
             android:horizontalSpacing="@dimen/GridSpacing"
             android:verticalSpacing="@dimen/GridSpacing" />
+        <TextView
+            android:id="@+id/AlarmMessage"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:padding="@dimen/TextViewsPaddingDist"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight="@dimen/TextViewsWeight"
+            android:text="@string/please_revert_the_phone_to_the_initial_position"
+            android:visibility="gone"
+            />
     </LinearLayout>
 
 </RelativeLayout>

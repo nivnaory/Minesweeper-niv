@@ -225,9 +225,9 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
     public void alarmStateChanged(ALARM_STATE state, int timeSinceLastPositionChanged) {
         if (!game.getBoard().getGameStatus().equals(GAME_STATUS_PLAY))
             return;
-        if (state == ALARM_STATE.ON_POSITION) // which means the user reverted the phone to initial position
+        if (state == ALARM_STATE.ON_POSITION) { // which means the user reverted the phone to initial position
             setGridViewBackgroundColor(gridView, R.color.BackgroundColor);
-        else { // NOT_ON_POSITION
+        } else { // NOT_ON_POSITION
             setGridViewBackgroundColor(gridView, R.color.alarmedGridBackground);
             if (currentTime % INSERT_A_MINE_THRESHOLD == 0) { // 10, 20, 30, ...
                 game.insertARandomMine();
@@ -235,11 +235,25 @@ public class GameActivity extends AppCompatActivity implements Finals, SensorSer
             } else if (currentTime % COVER_A_TILE_THRESHOLD == 0) // 5, 15, 25, ...
                 game.coverARandomTile();
         }
+        handleAlarmMessage(state);
         runOnUINotifyDataSetChanged();
         if (game.getBoard().hasLost()) {
             game.getBoard().finishGame();
             timer.cancel();
         }
+    }
+
+    private void handleAlarmMessage(final ALARM_STATE state) {
+        final TextView warning = findViewById(R.id.AlarmMessage);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (state == ALARM_STATE.ON_POSITION)
+                    warning.setVisibility(View.GONE);
+                else
+                    warning.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void runOnUINotifyDataSetChanged() {
